@@ -2,12 +2,12 @@ package shagold.wifwaf;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
+import android.widget.ImageButton;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 
@@ -26,10 +26,14 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private Button applyChangeUserProfile;
 
+    private ImageButton imageButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        Log.d("CREATE", "USER PROFILE ACTIVITY");
 
         userProfileName = (EditText) findViewById(R.id.userProfileName);
         userProfileName.setText(defaultUser.getNickname());
@@ -60,6 +64,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return MenuManager.defaultMenu(this, item.getItemId()) || super.onOptionsItemSelected(item);
+        return MenuManager.defaultMenu(this, item) || super.onOptionsItemSelected(item);
     }
 }

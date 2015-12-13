@@ -34,7 +34,22 @@
     <string name="title_activity_user_profile">My Profile</string>
     <string name="title_activity_user_dogs">My Dogs</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_walk_profile">Walk\'s profile</string>
+    <string name="title_activity_user_walks">My walks</string>
+    <string name="title_activity_dog_profile">Dog\'s profile</string>
+    <string name="title_activity_add_walk">Add a walk</string>
     <string name="action_profile">Profile</string>
     <string name="action_home">Home</string>
     <string name="action_dogs">Dogs</string>
+    <string name="connect"></string>
+    <string name="button_sign_in"></string>
+
+    <!-- Jimmy add -->
+    <string name="user_dogs_prompt">Choose your dogs</string>
+    <string name="new_walk">New Walk</string>
+
+    <string-array name="user_dogs_arrays">
+        <item>No dogs</item>
+    </string-array>
+
 </resources>

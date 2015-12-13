@@ -21,4 +21,16 @@
     <string name="title_activity_add_dog">Ajout d\'un Chien</string>
     <string name="button_add_dog">Ajout d\'un Chien</string>
     <string name="button_sign_in">Inscription</string>
+    <string name="age">Age</string>
+    <string name="breed">Race</string>
+    <string name="button_connect">connexion</string>
+    <string name="getAlongWithFemales">Est-ce que votre chien s\'entend avec les femelles?</string>
+    <string name="getAlongWithHumans">Est-ce que votre chien est sociable avec les humains?</string>
+    <string name="getAlongWithKids">Est-ce que votre chien s\'entend avec les enfants?</string>
+    <string name="getAlongWithMales">Est-ce que votre chien s\'entend avec les mâles?</string>
+    <string name="name"></string>
+    <string name="size">Taille</string>
+    <string name="title_activity_add_walk">Ajouter une balade</string>
+    <string name="title_activity_dog_profile">Profil du chien</string>
+    <string name="title_activity_walk_profile">Mes balades</string>
 </resources>

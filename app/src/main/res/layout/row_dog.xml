@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/avatarRowDog"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:background="#AAA"
+        />
+
+    <TextView
+        android:id="@+id/nameRowDog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/avatarRowDog"
+        android:layout_alignTop="@+id/avatarRowDog"
+        android:textStyle="bold"
+        tools:text="Name"
+        />
+
+    <TextView
+        android:id="@+id/descriptionRowDog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/nameRowDog"
+        android:layout_below="@+id/nameRowDog"
+        tools:text="default description"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:id="@+id/deleteDogButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+
+</RelativeLayout>
