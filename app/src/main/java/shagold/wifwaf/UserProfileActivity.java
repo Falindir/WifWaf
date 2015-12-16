@@ -10,13 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
+import shagold.wifwaf.manager.SocketManager;
 
 /**
  * Created by jimmy on 07/11/15.
  */
 public class UserProfileActivity extends AppCompatActivity {
 
-    private User defaultUser = new User("toto@gmail.com", "marlene", "toto", "12 Nov", 674560934, "une codeuse", null);
+    private User mUser;
 
     private EditText userProfileName;
     private EditText userProfileMail;
@@ -33,22 +34,24 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        mUser = SocketManager.getMyUser();
+
         Log.d("CREATE", "USER PROFILE ACTIVITY");
 
         userProfileName = (EditText) findViewById(R.id.userProfileName);
-        userProfileName.setText(defaultUser.getNickname());
+        userProfileName.setText(mUser.getNickname());
 
         userProfileMail = (EditText) findViewById(R.id.userProfileMail);
-        userProfileMail.setText(defaultUser.getEmail());
+        userProfileMail.setText(mUser.getEmail());
 
         userProfileBirthday = (EditText) findViewById(R.id.userProfileBirthday);
-        userProfileBirthday.setText(defaultUser.getBirthday());
+        userProfileBirthday.setText(mUser.getBirthday());
 
         userProfileDescription = (EditText) findViewById(R.id.userProfileDescription);
-        userProfileDescription.setText(defaultUser.getDescription());
+        userProfileDescription.setText(mUser.getDescription());
 
         userProfilePhoneNumber = (EditText) findViewById(R.id.userProfilePhoneNumber);
-        userProfilePhoneNumber.setText(Integer.toString(defaultUser.getPhoneNumber()));
+        userProfilePhoneNumber.setText(Integer.toString(mUser.getPhoneNumber()));
 
         applyChangeUserProfile = (Button) findViewById(R.id.applyChangeUserProfile);
         applyChangeUserProfile.setEnabled(false);

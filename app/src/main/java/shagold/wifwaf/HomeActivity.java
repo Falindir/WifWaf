@@ -77,19 +77,20 @@ public class HomeActivity extends AppCompatActivity {
 
     private List<Walk> generateWalks() {
         List<Walk> walks = new ArrayList<Walk>();
+//(int id, int idDog, int idUser, String wN, String description, String city, String dep)
+        walks.add(new Walk(0, 23, 10, "Balade 1", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(1, 23, 10, "Balade 2", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(2, 23, 10, "Balade 3", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(3, 23, 10, "Balade 4", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(4, 23, 10, "Balade 5", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(5, 23, 10, "Balade 6", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(6, 23, 10, "Balade 1", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(7, 23, 10, "Balade 2", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(8, 23, 10, "Balade 3", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(9, 23, 10, "Balade 4", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(10, 23, 10, "Balade 5", "Ma premiere balade !", "Montpellier", "desc"));
+        walks.add(new Walk(11, 23, 10, "Balade 6", "Ma premiere balade !", "Montpellier", "desc"));
 
-        /*walks.add(new Walk("Balade 1", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 2", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 3", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 4", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 5", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 6", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 1", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 2", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 3", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 4", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 5", "Ma premiere balade !"));
-        walks.add(new Walk("Balade 6", "Ma premiere balade !"));*/
         return walks;
     }
 
@@ -100,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Walk walk = (Walk) mListView.getItemAtPosition(position);
-                Intent clickedWalkProfile = new Intent(getApplicationContext(), WalkProfileActivity.class);
+                Intent clickedWalkProfile = new Intent(getApplicationContext(), PublicWalkProfileActivity.class);
                 clickedWalkProfile.putExtra("WALK", walk);
                 startActivity(clickedWalkProfile);
             }

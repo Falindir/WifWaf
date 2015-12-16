@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +74,8 @@ public class UserWalksActivity extends AppCompatActivity {
                 Walk walk = (Walk) mListView.getItemAtPosition(position);
                 Intent clickedWalkProfile = new Intent(getApplicationContext(), WalkProfileActivity.class);
                 clickedWalkProfile.putExtra("WALK", walk);
+                System.out.println("IDC : " + walk.getIdUser() + " - IDU : " + mUser.getIdUser());
+
                 startActivity(clickedWalkProfile);
             }
         });
@@ -81,10 +84,11 @@ public class UserWalksActivity extends AppCompatActivity {
     private List<Walk> generateWalks(){
         List<Walk> walks = new ArrayList<Walk>();
 
-        walks.add(new Walk(0, mUser.getIdUser(), "T1", "D1"));
-        walks.add(new Walk(1, mUser.getIdUser(), "T2", "D2"));
-        walks.add(new Walk(2, mUser.getIdUser(), "T3", "D3"));
-        walks.add(new Walk(3, mUser.getIdUser(), "T4", "D4"));
+        //(int id, int idDog, int idUser, String wN, String description, String city, String dep)
+        walks.add(new Walk(0, 1, mUser.getIdUser(), "T1", "D1", "Montpellier", "desc"));
+        walks.add(new Walk(1, 1, mUser.getIdUser(), "T2", "D2", "Montpellier", "desc"));
+        walks.add(new Walk(2, 1, mUser.getIdUser(), "T3", "D3", "Montpellier", "desc"));
+        walks.add(new Walk(3, 1, mUser.getIdUser(), "T4", "D4", "Montpellier", "desc"));
 
         return walks;
     }

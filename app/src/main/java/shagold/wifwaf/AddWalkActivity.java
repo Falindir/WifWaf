@@ -29,6 +29,7 @@ import java.util.List;
 
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
+import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.list.DogAdapter;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
@@ -125,8 +126,11 @@ public class AddWalkActivity extends AppCompatActivity {
 
                 final Intent actGPSWalk = new Intent(getApplicationContext(), GPSWalkActivity.class);
                 if (dogsSelectedNumber > 0) {
-                    if (validText)
+                    if (validText) {
+                        Walk walk = new Walk(dogChoise.get(0).getIdDog(), mUser.getIdUser(),nameWalk.getText().toString(), descriptionWalk.getText().toString(), "null", "");
+                        actGPSWalk.putExtra("WALK", walk);
                         startActivity(actGPSWalk);
+                    }
                 } else {
                     dogsForWall.setError(ErrorMessage.BLANK.toString());
                 }

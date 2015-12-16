@@ -12,14 +12,14 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="shagold.wifwaf.WalkProfileActivity">
+        tools:context="shagold.wifwaf.PublicWalkProfileActivity">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/title"/>
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/walkTitle"
@@ -43,17 +43,11 @@
             android:layout_height="match_parent"
             android:text="@string/description"/>
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/walkDescription"
             android:inputType="text" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete_black_24dp"
-            android:id="@+id/deleteWalkButton"/>
 
         <Button
             android:layout_width="wrap_content"

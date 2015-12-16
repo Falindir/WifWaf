@@ -1,5 +1,6 @@
 package shagold.wifwaf;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -41,6 +42,7 @@ public class AddDogActivity extends AppCompatActivity {
         mSocket = SocketManager.getMySocket();
         mUser = SocketManager.getMyUser();
         mSocket.on("RGetAllBehaviours", onRGetAllBehaviours);
+        mSocket.on("RTryAddDog", onRTryAddDog);
         mSocket.emit("getAllBehaviours");
 
         // Gestion vue + gestion activity's state
@@ -50,13 +52,6 @@ public class AddDogActivity extends AppCompatActivity {
         // Gestion click bouton de confirmation
         this.confirmAddDog = (Button) findViewById(R.id.confirmAddDogButton);
         this.confirmAddDog.setBackgroundColor(WifWafColor.BROWN_DARK);
-        /*final Intent getUserDog = new Intent(getApplicationContext(), UserDogsActivity.class);
-        confirmAddDog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(getUserDog);
-            }
-        });*/
     }
 
     public void tryAddDog(View view) throws JSONException {
@@ -220,6 +215,24 @@ public class AddDogActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener onRTryAddDog = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args)  {
+            AddDogActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final Intent getUserDog = new Intent(getApplicationContext(), UserDogsActivity.class);
+                    confirmAddDog.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(getUserDog);
+                        }
+                    });
                 }
             });
         }

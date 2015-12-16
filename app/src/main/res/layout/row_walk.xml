@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/avatarRowWalk"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         tools:background="#AAA"
         />
 
@@ -26,13 +26,32 @@
         />
 
     <TextView
-        android:id="@+id/descriptionRowWalk"
+        android:id="@+id/cityRowWalk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/titleRowWalk"
         android:layout_below="@+id/titleRowWalk"
-        tools:text="default description"
+        tools:text="city"
         />
 
+    <TextView
+        android:id="@+id/lengthRowWalk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/cityRowWalk"
+        android:layout_below="@+id/cityRowWalk"
+        tools:text="length"
+        />
+
+    <TextView
+        android:id="@+id/descriptionRowWalk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/lengthRowWalk"
+        android:layout_below="@+id/lengthRowWalk"
+        tools:text="default description"
+        />
 </RelativeLayout>

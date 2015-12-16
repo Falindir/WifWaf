@@ -47,9 +47,20 @@
     <!-- Jimmy add -->
     <string name="user_dogs_prompt">Choose your dogs</string>
     <string name="new_walk">New Walk</string>
+    <string name="title">Title</string>
+    <string name="contact_creator">Contact creator</string>
+    <string name="userProfile">User Profile</string>
+    <string name="seeProfile">See user profile</string>
+    <string name="save">Save</string>
 
     <string-array name="user_dogs_arrays">
         <item>No dogs</item>
     </string-array>
+    <string name="title_activity_public_user_profile">PublicUserProfileActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_public_walk_profile">PublicWalkProfileActivity</string>
+    <string name="no_address_found">no address found</string>
+    <string name="address_found">address found</string>
 
 </resources>

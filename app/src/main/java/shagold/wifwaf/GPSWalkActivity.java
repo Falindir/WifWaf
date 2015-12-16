@@ -1,13 +1,19 @@
 package shagold.wifwaf;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -20,11 +26,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.manager.MenuManager;
+import shagold.wifwaf.manager.SocketManager;
 
 public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -36,6 +48,36 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
     private PolylineOptions lines = new PolylineOptions();
     private LinkedList<LatLng> linesLatLng = new LinkedList<LatLng>();
     private List<PolylineOptions> pl = new ArrayList<PolylineOptions>();
+
+    private AddressResultReceiver mResultReceiver;
+
+    private Socket mSocket;
+    private Walk walk;
+
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode == Constants.SUCCESS_RESULT)
+                walk.setCity(resultData.getString(Constants.RESULT_DATA_KEY));
+        }
+    }
+
+    public void finishWalk(View view) {
+        for(LatLng p : linesLatLng) {
+            walk.addLocationToWalk(p.latitude, p.longitude);
+        }
+
+        try {
+            JSONObject walkJson = walk.toJson();
+            mSocket.emit("TryAddWalk", walkJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +91,10 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
 
         createLocationRequest();
         //mMap.getUiSettings().setRotateGesturesEnabled(false);
+
+        walk = (Walk) getIntent().getSerializableExtra("WALK");
+        mSocket = SocketManager.getMySocket();
+        mSocket.on("RTryAddWalk", onRTryAddWalk);
     }
 
     @Override
@@ -78,6 +124,12 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
         myLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title("Gold"));
         Log.d("TT", "onCreate ..............................." + mLastLocation.toString());
         startLocationUpdates();
+
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        mResultReceiver = new AddressResultReceiver(new Handler());
+        intent.putExtra(Constants.RECEIVER, mResultReceiver);
+        intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
+        startService(intent);
     }
 
     protected void startLocationUpdates() {
@@ -162,4 +214,17 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
                 .addApi(LocationServices.API)
                 .build();
     }
+
+    private Emitter.Listener onRTryAddWalk = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            GPSWalkActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent resultat = new Intent(GPSWalkActivity.this, UserWalksActivity.class);
+                    startActivity(resultat);
+                }
+            });
+        }
+    };
 }
