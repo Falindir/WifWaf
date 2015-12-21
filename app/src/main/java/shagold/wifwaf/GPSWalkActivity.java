@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,6 +38,7 @@ import java.util.List;
 import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
+import shagold.wifwaf.tool.Constants;
 
 public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -55,14 +57,14 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
     private Walk walk;
 
     class AddressResultReceiver extends ResultReceiver {
-        public AddressResultReceiver(Handler handler) {
-            super(handler);
+        public AddressResultReceiver(Handler h) {
+            super(h);
         }
 
         @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-            if (resultCode == Constants.SUCCESS_RESULT)
-                walk.setCity(resultData.getString(Constants.RESULT_DATA_KEY));
+        protected void onReceiveResult(int codeResultat, Bundle donneesResult) {
+            if (codeResultat == Constants.SUCCESS_RESULT)
+                walk.setCity(donneesResult.getString(Constants.RESULT_DATA_KEY));
         }
     }
 
@@ -90,7 +92,6 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
         mGoogleApiClient.connect();
 
         createLocationRequest();
-        //mMap.getUiSettings().setRotateGesturesEnabled(false);
 
         walk = (Walk) getIntent().getSerializableExtra("WALK");
         mSocket = SocketManager.getMySocket();
@@ -121,11 +122,13 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
     public void onConnected(Bundle bundle) {
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        myLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title("Gold"));
+        myLocation = mMap.addMarker(new MarkerOptions().position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title("Start walk"));
         Log.d("TT", "onCreate ..............................." + mLastLocation.toString());
         startLocationUpdates();
 
-        Intent intent = new Intent(this, FetchAddressIntentService.class);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 16));
+
+        Intent intent = new Intent(this, AddressLocationService.class);
         mResultReceiver = new AddressResultReceiver(new Handler());
         intent.putExtra(Constants.RECEIVER, mResultReceiver);
         intent.putExtra(Constants.LOCATION_DATA_EXTRA, mLastLocation);
@@ -196,15 +199,7 @@ public class GPSWalkActivity extends FragmentActivity implements GoogleApiClient
             // Try to obtain the map from the SupportMapFragment.
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
         }
-    }
-
-    private void setUpMap() {
-        Log.d("TTT", "Start ...............................");
     }
 
     protected synchronized void buildGoogleApiClient() {

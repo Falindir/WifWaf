@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/avatarRowWalk"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         tools:background="#AAA"
         />
 
@@ -36,22 +36,32 @@
         />
 
     <TextView
-        android:id="@+id/lengthRowWalk"
+        android:id="@+id/descriptionRowWalk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/cityRowWalk"
         android:layout_below="@+id/cityRowWalk"
-        tools:text="length"
+        tools:text="description"
         />
 
     <TextView
-        android:id="@+id/descriptionRowWalk"
+        android:id="@+id/dateRowWalk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/lengthRowWalk"
-        android:layout_below="@+id/lengthRowWalk"
-        tools:text="default description"
+        android:layout_alignLeft="@+id/descriptionRowWalk"
+        android:layout_below="@+id/descriptionRowWalk"
+        tools:text="date"
+        />
+
+    <TextView
+        android:id="@+id/timeRowWalk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_alignLeft="@+id/dateRowWalk"
+        android:layout_below="@+id/dateRowWalk"
+        tools:text="time"
         />
 </RelativeLayout>

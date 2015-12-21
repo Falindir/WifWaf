@@ -22,14 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/walkTitle"
-            android:inputType="text" />
-
-        <ImageView
-            android:id="@+id/avatarCreatorWalk"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            tools:background="#AAA"/>
+            android:id="@+id/walkPublicTitle" />
 
         <Button
             android:layout_width="wrap_content"
@@ -41,19 +34,63 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="@string/city"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/walkPublicCity"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/description"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/walkDescription"
-            android:inputType="text" />
+            android:id="@+id/walkPublicDescription"
+           />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/date"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/walkPublicDateDeparture"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/time"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/walkPublicTimeDeparture"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use"
-            android:id="@+id/useWalkButton"/>
+            android:text="@string/walkDogs"
+            android:onClick="walkDogs"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/viewPath"
+            android:onClick="viewPath"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/useWalk"
+            android:id="@+id/useWalkButton"
+            android:onClick="useWalk"/>
 
     </LinearLayout>
 </ScrollView>

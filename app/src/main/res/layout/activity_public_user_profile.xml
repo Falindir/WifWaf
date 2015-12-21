@@ -25,7 +25,7 @@
             android:id="@+id/userProfileName" />
 
         <ImageView
-            android:id="@+id/avatarUserProfile"
+            android:id="@+id/avatarPublicUserProfile"
             android:layout_width="200dp"
             android:layout_height="200dp"
             tools:background="#AAA"/>
@@ -69,6 +69,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/userProfileDescription" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/userDogs"
+            android:onClick="userDogs"/>
 
     </LinearLayout>
 

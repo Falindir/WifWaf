@@ -9,18 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
@@ -33,7 +27,6 @@ public class UserDogsActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private User mUser;
-    private Button addDog;
     private ListView mListView;
 
     @Override
@@ -47,16 +40,6 @@ public class UserDogsActivity extends AppCompatActivity {
         mSocket.on("RGetAllMyDogs", onRGetAllMyDogs);
         mSocket.emit("getAllMyDogs", mUser.getIdUser());
         mSocket.on("RdeleteDog", onRDeleteDog);
-
-        final Intent activityAddDog = new Intent(getApplicationContext(), AddDogActivity.class);
-
-        addDog = (Button) findViewById(R.id.addDogButton);
-        addDog.setBackgroundColor(WifWafColor.BROWN_DARK);
-        addDog.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                startActivity(activityAddDog);
-            }
-        });
     }
 
     @Override
@@ -68,26 +51,6 @@ public class UserDogsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return MenuManager.defaultMenu(this, item) || super.onOptionsItemSelected(item);
-    }
-
-    private List<Dog> generateDogsFromJson(JSONArray dogsJSON) {
-
-        List<Dog> dogs = new ArrayList<Dog>();
-
-        if(dogsJSON != null) {
-            for (int i = 0; i < dogsJSON.length(); i++) {
-                JSONObject currentObj = null;
-                try {
-                    currentObj = dogsJSON.getJSONObject(i);
-                    Dog newDog = new Dog(currentObj);
-                    dogs.add(newDog);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return dogs;
     }
 
     private void initListView() {
@@ -104,13 +67,18 @@ public class UserDogsActivity extends AppCompatActivity {
         });
     }
 
+    public void addDog(View view){
+        final Intent activityAddDog = new Intent(getApplicationContext(), AddDogActivity.class);
+        startActivity(activityAddDog);
+    }
+
     private Emitter.Listener onRGetAllMyDogs = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             UserDogsActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    List<Dog> dogs = generateDogsFromJson((JSONArray) args[0]);
+                    List<Dog> dogs = Dog.generateDogsFromJson((JSONArray) args[0]);
                     DogAdapter adapter = new DogAdapter(UserDogsActivity.this, dogs);
                     mListView.setAdapter(adapter);
                 }

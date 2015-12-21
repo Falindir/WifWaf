@@ -7,7 +7,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.ResultReceiver;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -15,28 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by pierre on 13/12/15.
- */
-public class FetchAddressIntentService extends IntentService {
+import shagold.wifwaf.tool.Constants;
+
+public class AddressLocationService extends IntentService {
 
     protected ResultReceiver mReceiver;
-
-    public FetchAddressIntentService() {
-        super("");
+    public AddressLocationService(){
+        super("AddressLocationService");
     }
 
-    public FetchAddressIntentService(String name) {
+    public AddressLocationService(String name) {
         super(name);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
         String errorMessage = "";
 
-        // Get the location passed to this service through an extra.
+        // On récupère la position passée au service grâce à un extra.
         Location location = intent.getParcelableExtra(
                 Constants.LOCATION_DATA_EXTRA);
 
@@ -51,11 +47,11 @@ public class FetchAddressIntentService extends IntentService {
                     location.getLongitude(),
                     1);
         } catch (IOException ioException) {
-            // Catch network or other I/O problems.
+            // Erreur réseau ou entrée/sortie
             errorMessage = "I/O problems";
             Log.e("HandleIntent", errorMessage, ioException);
         } catch (IllegalArgumentException illegalArgumentException) {
-            // Catch invalid latitude or longitude values.
+            // Erreur de longitude/lattitude invalides
             errorMessage = "invalid_lat_long_used";
             Log.e("HandleIntent", errorMessage + ". " +
                     "Latitude = " + location.getLatitude() +
@@ -63,28 +59,25 @@ public class FetchAddressIntentService extends IntentService {
                     location.getLongitude(), illegalArgumentException);
         }
 
-        // Handle case where no address was found.
-        if (addresses == null || addresses.size()  == 0) {
+        // Cas où aucune ville n'est trouvée
+        if (addresses == null || addresses.size() == 0) {
             if (errorMessage.isEmpty()) {
                 errorMessage = getString(R.string.no_address_found);
             }
-            deliverResultToReceiver(Constants.FAILURE_RESULT, errorMessage);
+            envoiResultatAuDestinataire(Constants.FAILURE_RESULT, errorMessage);
         } else {
             Address address = addresses.get(0);
             ArrayList<String> addressFragments = new ArrayList<String>();
 
-            // Fetch the address lines using getAddressLine,
-            // join them, and send them to the thread.
             for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                 addressFragments.add(address.getAddressLine(i));
             }
-            deliverResultToReceiver(Constants.SUCCESS_RESULT,
+            envoiResultatAuDestinataire(Constants.SUCCESS_RESULT,
                     address.getLocality() + ", " + address.getCountryName());
-
         }
     }
 
-    private void deliverResultToReceiver(int resultCode, String message) {
+    private void envoiResultatAuDestinataire(int resultCode, String message) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
         mReceiver.send(resultCode, bundle);

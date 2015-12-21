@@ -13,7 +13,7 @@ public class User {
     private String email = "";
     private String nickname;
     private String password;
-    private String birthday = ""; //TODO classe gestion de dates
+    private String birthday = "";
     private int phoneNumber = 0;
     private String description = "";
     private String photo = "";
@@ -22,7 +22,7 @@ public class User {
     public User(){}
 
     public User(JSONObject userJson) throws JSONException {
-        this.idUser = (int) userJson.get("id");
+        this.idUser = (int) userJson.get("idUser");
         this.email = (String) userJson.get("email");
         this.nickname = (String) userJson.get("nickname");
         this.password = (String) userJson.get("password");
@@ -44,6 +44,18 @@ public class User {
         this.flag = 0; // TODO gestion flag: niveau de privatisation des données
     }
 
+    public User(int idUser, String email, String nickname, String password, String birthday, int phoneNumber, String description, String photo){
+        this.idUser = idUser;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.birthday = birthday;
+        this.phoneNumber = phoneNumber;
+        this.description = description;
+        this.photo = photo;
+        this.flag = 0;
+    }
+
     public User(String email, String password){
         this.email = email;
         this.password = password;
@@ -51,6 +63,19 @@ public class User {
 
     public JSONObject toJson() throws JSONException {
         JSONObject userJson = new JSONObject();
+        userJson.put("email", this.email);
+        userJson.put("nickname", this.nickname);
+        userJson.put("password", this.password);
+        userJson.put("birthday", this.birthday);
+        userJson.put("phoneNumber", this.phoneNumber);
+        userJson.put("description", this.description);
+        userJson.put("photo", this.photo);
+        return userJson;
+    }
+
+    public JSONObject toJsonWithId() throws JSONException {
+        JSONObject userJson = new JSONObject();
+        userJson.put("idUser", this.idUser);
         userJson.put("email", this.email);
         userJson.put("nickname", this.nickname);
         userJson.put("password", this.password);
@@ -119,14 +144,18 @@ public class User {
         this.photo = photo;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public static String encryptPassword(String source) {
         MessageDigest mdEnc = null;
         try {
             mdEnc = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("Exception while encrypting to md5");
+            System.out.println("Exception lors de l'encryptage en md5");
             e.printStackTrace();
-        } // Encryption algorithm
+        } // Algo de cryptage
         mdEnc.update(source.getBytes(), 0, source.length());
         String md5 = new BigInteger(1, mdEnc.digest()).toString(16);
         while ( md5.length() < 32 ) {

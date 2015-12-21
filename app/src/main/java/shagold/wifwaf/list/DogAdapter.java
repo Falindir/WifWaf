@@ -3,23 +3,18 @@ package shagold.wifwaf.list;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.nkzawa.socketio.client.Socket;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import shagold.wifwaf.DogProfileActivity;
 import shagold.wifwaf.R;
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.manager.SocketManager;
@@ -37,7 +32,6 @@ public class DogAdapter extends ArrayAdapter<Dog> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         if(convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_dog,parent, false);
 
@@ -63,7 +57,7 @@ public class DogAdapter extends ArrayAdapter<Dog> {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(c);
                 dialog.setTitle("Delete Dog");
                 dialog.setMessage("Are you sure to delete the dog : \n\n\t" + dog.getName());
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int id = dog.getIdDog();
@@ -79,7 +73,6 @@ public class DogAdapter extends ArrayAdapter<Dog> {
                 alertDeleteDogs.show();
             }
         });
-
         return convertView;
     }
 }

@@ -6,10 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
@@ -49,9 +53,53 @@ public class AddDogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dog);
 
-        // Gestion click bouton de confirmation
-        this.confirmAddDog = (Button) findViewById(R.id.confirmAddDogButton);
-        this.confirmAddDog.setBackgroundColor(WifWafColor.BROWN_DARK);
+        // Gestion gender
+        Spinner Ssex = (Spinner) findViewById(R.id.gender);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.gender_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Ssex.setAdapter(adapter);
+
+        SeekBar ageControl = (SeekBar) findViewById(R.id.ageDogSeek);
+        SeekBar sizeControl = (SeekBar) findViewById(R.id.sizeDogSeek);
+
+        final TextView ETage = (TextView) findViewById(R.id.age);
+        ETage.setText("0");
+
+        final TextView ETsize = (TextView) findViewById(R.id.size);
+        ETsize.setText("1");
+
+        ageControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            double progressChanged = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChanged = ((double) progress) / 10;
+                ETage.setText(String.valueOf(progressChanged));
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        sizeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int progressChanged = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChanged = progress + 1;
+                ETsize.setText(String.valueOf(progressChanged));
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
     }
 
     public void tryAddDog(View view) throws JSONException {
@@ -61,14 +109,23 @@ public class AddDogActivity extends AppCompatActivity {
 
         //Récupération des valeurs
         EditText ETname = (EditText) findViewById(R.id.name);
-        EditText ETage = (EditText) findViewById(R.id.age);
+        TextView ETage = (TextView) findViewById(R.id.age);
         EditText ETbreed = (EditText) findViewById(R.id.breed);
-        EditText ETsize = (EditText) findViewById(R.id.size);
+        TextView ETsize = (TextView) findViewById(R.id.size);
         EditText ETGetalongwithMales = (EditText) findViewById(R.id.getAlongWithMales);
         EditText ETGetalongwithFemales = (EditText) findViewById(R.id.getAlongWithFemales);
         EditText ETGetalongwithKids = (EditText) findViewById(R.id.getAlongWithKids);
         EditText ETGetalongwithHumans = (EditText) findViewById(R.id.getAlongWithHumans);
         EditText ETDescription = (EditText) findViewById(R.id.description);
+        Spinner Ssex = (Spinner) findViewById(R.id.gender);
+        String gender = Ssex.getSelectedItem().toString();
+        boolean sGender;
+        if (gender.equals("Male")){
+            sGender = true;
+        }
+        else{
+            sGender = false;
+        }
 
         //Test validité des champs
         TextValidator textValidator = new TextValidator();
@@ -173,7 +230,7 @@ public class AddDogActivity extends AppCompatActivity {
         String Sdescription = ETDescription.getText().toString();
 
         //Test ajout d'un chien
-        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription);
+        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender);
         JSONObject jsonDog = dog.toJson();
         System.out.println("TryAddDog" + jsonDog);
         mSocket.emit("TryAddDog", jsonDog);
@@ -198,7 +255,6 @@ public class AddDogActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONArray listBehaviour =  (JSONArray) args[0];
-                    System.out.println("je recois l'objet" + listBehaviour.toString());
                     for (int i = 0; i < listBehaviour.length(); i++) {
                         JSONObject currentObj = null;
                         try {
@@ -227,12 +283,7 @@ public class AddDogActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     final Intent getUserDog = new Intent(getApplicationContext(), UserDogsActivity.class);
-                    confirmAddDog.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity(getUserDog);
-                        }
-                    });
+                    startActivity(getUserDog);
                 }
             });
         }

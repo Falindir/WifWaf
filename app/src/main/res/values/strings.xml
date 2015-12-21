@@ -15,6 +15,8 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_connect">connection</string>
 
+    <string name="error_email_already_exists">Cette adresse mail est déjà utilisée</string>
+
     <!-- Activity add dog -->
     <string name="title_activity_add_dog">Add Dog</string>
     <string name="name">Name</string>
@@ -26,6 +28,7 @@
     <string name="getAlongWithFemales">Does your dog get along with female dogs?</string>
     <string name="getAlongWithKids">Does your dog get along with children?</string>
     <string name="getAlongWithHumans">Does your dog get along with humans in general?</string>
+    <string name="gender">Gender</string>
 
     <!-- Strings communes à plusieurs forms -->
     <string name="confirm">confirm</string>
@@ -56,11 +59,32 @@
     <string-array name="user_dogs_arrays">
         <item>No dogs</item>
     </string-array>
-    <string name="title_activity_public_user_profile">PublicUserProfileActivity</string>
+    <string name="title_activity_public_user_profile">User Profile</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_public_walk_profile">PublicWalkProfileActivity</string>
+    <string name="title_activity_public_walk_profile">Walk</string>
     <string name="no_address_found">no address found</string>
     <string name="address_found">address found</string>
+    <string name="city">City</string>
+    <string name="useWalk">Use Walk</string>
+    <string name="userDogs">User Dogs</string>
+    <string name="walkDogs">Walk Dogs</string>
+    <string name="viewPath">View Path</string>
+    <string name="departure">Departure</string>
+    <string name="timeStamp">At what time?</string>
+    <string name="date">Which day?</string>
+    <string name="TraceByWalking">Trace by walking</string>
+    <string name="TraceByDrawing">Trace by drawing</string>
+    <string name="promptGender">Gender</string>
+    <string name="selectDog">Select dogs</string>
+    <string name="time">Time</string>
+    <string name="title_activity_gps_walk">Walk Path</string>
 
+
+    <string name="cancel">Cancel</string>
+    <string name="title_prompt_select_dogs">Select the dogs participating to this walk</string>
+    <string name="no_dogs_selected">No dogs selected</string>
+    <string name="selected_dogs">Dogs selected :</string>
+    <string name="select_date">Select date</string>
+    <string name="modify_date">Modify date</string>
 </resources>

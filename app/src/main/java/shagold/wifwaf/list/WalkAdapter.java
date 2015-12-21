@@ -1,14 +1,10 @@
 package shagold.wifwaf.list;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,10 +16,9 @@ import shagold.wifwaf.R;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.manager.SocketManager;
+import shagold.wifwaf.tool.WifWafColor;
+import shagold.wifwaf.tool.WifWafWalkDeparture;
 
-/**
- * Created by jimmy on 22/11/15.
- */
 public class WalkAdapter extends ArrayAdapter<Walk> {
 
     private Context c;
@@ -52,50 +47,22 @@ public class WalkAdapter extends ArrayAdapter<Walk> {
             viewHolder.setAvatar((ImageView) convertView.findViewById(R.id.avatarRowWalk));
             //viewHolder.setButton((ImageButton) convertView.findViewById(R.id.deleteWalkButton));
             viewHolder.setCity((TextView) convertView.findViewById(R.id.cityRowWalk));
-            viewHolder.setLength((TextView) convertView.findViewById(R.id.lengthRowWalk));
+            viewHolder.setDate((TextView) convertView.findViewById(R.id.dateRowWalk));
+            viewHolder.setTime((TextView) convertView.findViewById(R.id.timeRowWalk));
             convertView.setTag(viewHolder);
         }
 
+        // TODO fix warning with resource android
         final Walk walk = getItem(position);
         viewHolder.getTitle().setText(walk.getTitle());
-        viewHolder.getDescription().setText(walk.getDescription());
-        //viewHolder.getAvatar().setImageDrawable();
+        viewHolder.getDescription().setText("Description : " + walk.getDescription());
+        //TODO default value
+        viewHolder.getAvatar().setImageResource(R.drawable.user);
+        viewHolder.getCity().setText("City " + " : " + walk.getCity());
+        WifWafWalkDeparture departure = new WifWafWalkDeparture(walk.getDeparture());
+        viewHolder.getDate().setText("Date : " + departure.getFormattedDate());
+        viewHolder.getTime().setText("Time : " + departure.getFormattedTime());
 
-        viewHolder.getCity().setText(walk.getCity());
-        //viewHolder.getLength().setText(String.valueOf(walk.getLength()));
-        //TODO enlever length de la vue
-
-        /* // TODO need fix probleme
-        if(!walk.isCreator(mUser.getIdUser())) {
-            System.out.println("INV : " + walk.getTitle());
-            viewHolder.getButton().setVisibility(View.INVISIBLE);
-        }*/
-
-        // viewHolder.getButton().setFocusable(false);
-        /*viewHolder.getButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(c);
-                dialog.setTitle("Delete Walk");
-                dialog.setMessage("Are you sure to delete the walk : \n\n\t" + walk.getTitle());
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int id = walk.getId();
-                        //mSocket.emit("deleteWalk", id);
-                    }
-                });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                AlertDialog alertDeleteWalk = dialog.create();
-                alertDeleteWalk.show();
-            }
-        });
-*/
         return convertView;
     }
-
 }

@@ -1,8 +1,5 @@
 package shagold.wifwaf.view;
 
-/**
- * Created by jimmy on 29/11/15.
- */
 public enum ErrorMessage {
 
     BLANK {

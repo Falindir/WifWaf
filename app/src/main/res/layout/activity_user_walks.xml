@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:text="@string/new_walk"
         android:id="@+id/addNewWalkButton"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right"
+        android:onClick="newWalk"/>
 
     <ListView
         android:id="@+id/walkUserListView"

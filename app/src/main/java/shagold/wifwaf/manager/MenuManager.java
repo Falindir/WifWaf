@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
 
-import shagold.wifwaf.AddWalkActivity;
 import shagold.wifwaf.HomeActivity;
 import shagold.wifwaf.R;
 import shagold.wifwaf.UserDogsActivity;
 import shagold.wifwaf.UserProfileActivity;
 import shagold.wifwaf.UserWalksActivity;
-
 
 public class MenuManager {
 
@@ -47,5 +45,4 @@ public class MenuManager {
                 return false;
         }
     }
-
 }

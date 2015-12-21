@@ -70,7 +70,7 @@
         </activity>
         <activity
             android:name=".GPSWalkActivity"
-            android:label=""
+            android:label="@string/title_activity_gps_walk"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -80,17 +80,37 @@
         </activity>
         <activity
             android:name=".PublicUserProfileActivity"
-            android:label="@string/title_activity_public_user_profile" >
+            android:label="@string/title_activity_public_user_profile"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".PublicWalkProfileActivity"
-            android:label="@string/title_activity_public_walk_profile" >
+            android:label="@string/title_activity_public_walk_profile"
+            android:screenOrientation="portrait">
         </activity>
-
+        <activity
+            android:name=".PublicDogProfileActivity"
+            android:label="@string/title_activity_dog_profile"
+            android:screenOrientation="portrait">
+        </activity>
         <service
-            android:name=".FetchAddressIntentService"
+            android:name=".AddressLocationService"
             android:exported="false"/>
-
+        <activity
+            android:name=".PublicPathProfileActivity"
+            android:label="@string/title_activity_gps_walk"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".UseWalkActivity"
+            android:label="@string/title_activity_add_walk"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".DrawingWalkActivity"
+            android:label="@string/title_activity_gps_walk"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

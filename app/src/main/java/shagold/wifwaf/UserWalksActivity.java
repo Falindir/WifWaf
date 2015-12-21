@@ -7,18 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
-import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import shagold.wifwaf.dataBase.User;
@@ -26,11 +20,7 @@ import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.list.WalkAdapter;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
-import shagold.wifwaf.tool.WifWafColor;
 
-/**
- * Created by jimmy on 13/12/15.
- */
 public class UserWalksActivity extends AppCompatActivity {
 
     private Socket mSocket;
@@ -48,20 +38,8 @@ public class UserWalksActivity extends AppCompatActivity {
         mSocket = SocketManager.getMySocket();
         mUser = SocketManager.getMyUser();
 
-        //TODO fix in server
-        //mSocket.on("RGetAllMyWalks", onRGetAllMyWalks);
-        //mSocket.emit("getAllMyWalks", mUser.getIdUser());
-        manualEvent();
-
-        final Intent activityAddWalk = new Intent(getApplicationContext(), AddWalkActivity.class);
-
-        Button addNewWalk = (Button) findViewById(R.id.addNewWalkButton);
-        addNewWalk.setBackgroundColor(WifWafColor.BROWN_DARK);
-        addNewWalk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                startActivity(activityAddWalk);
-            }
-        });
+        mSocket.on("RGetAllMyWalks", onRGetAllMyWalks);
+        mSocket.emit("getAllMyWalks", mUser.getIdUser());
 
     }
 
@@ -74,65 +52,9 @@ public class UserWalksActivity extends AppCompatActivity {
                 Walk walk = (Walk) mListView.getItemAtPosition(position);
                 Intent clickedWalkProfile = new Intent(getApplicationContext(), WalkProfileActivity.class);
                 clickedWalkProfile.putExtra("WALK", walk);
-                System.out.println("IDC : " + walk.getIdUser() + " - IDU : " + mUser.getIdUser());
-
                 startActivity(clickedWalkProfile);
             }
         });
-    }
-
-    private List<Walk> generateWalks(){
-        List<Walk> walks = new ArrayList<Walk>();
-
-        //(int id, int idDog, int idUser, String wN, String description, String city, String dep)
-        walks.add(new Walk(0, 1, mUser.getIdUser(), "T1", "D1", "Montpellier", "desc"));
-        walks.add(new Walk(1, 1, mUser.getIdUser(), "T2", "D2", "Montpellier", "desc"));
-        walks.add(new Walk(2, 1, mUser.getIdUser(), "T3", "D3", "Montpellier", "desc"));
-        walks.add(new Walk(3, 1, mUser.getIdUser(), "T4", "D4", "Montpellier", "desc"));
-
-        return walks;
-    }
-
-    private List<Walk> generateDogsFromJson(JSONArray json) {
-
-        List<Walk> walks = new ArrayList<Walk>();
-
-        if(json != null) {
-            for (int i = 0; i < json.length(); i++) {
-                JSONObject currentObj = null;
-                try {
-                    currentObj = json.getJSONObject(i);
-                    Walk newWalk = new Walk(currentObj);
-                    walks.add(newWalk);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return walks;
-    }
-
-    private Emitter.Listener onRGetAllMyWalks = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            UserWalksActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    List<Walk> walks = generateDogsFromJson((JSONArray) args[0]);
-                    WalkAdapter adapter = new WalkAdapter(UserWalksActivity.this, walks);
-                    mListView.setAdapter(adapter);
-                }
-
-            });
-        }
-
-    };
-
-    private void manualEvent() {
-        List<Walk> walks = generateWalks();
-        WalkAdapter adapter = new WalkAdapter(UserWalksActivity.this, walks);
-        mListView.setAdapter(adapter);
     }
 
     @Override
@@ -146,5 +68,22 @@ public class UserWalksActivity extends AppCompatActivity {
         return MenuManager.defaultMenu(this, item) || super.onOptionsItemSelected(item);
     }
 
+    public void newWalk(View view){
+        final Intent activityAddWalk = new Intent(getApplicationContext(), AddWalkActivity.class);
+        startActivity(activityAddWalk);
+    }
 
+    private Emitter.Listener onRGetAllMyWalks = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            UserWalksActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    List<Walk> walks = Walk.generateWalksFromJSON((JSONArray) args[0]);
+                    WalkAdapter adapter = new WalkAdapter(UserWalksActivity.this, walks);
+                    mListView.setAdapter(adapter);
+                }
+            });
+        }
+    };
 }

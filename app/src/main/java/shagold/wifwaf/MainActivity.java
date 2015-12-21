@@ -5,12 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private Button signUpButton;
-    private Button signInButton;
     private Button connexionDebug;
     private EditText Etemail;
     private EditText ETPassword;
@@ -49,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             SocketManager.setMySocket(IO.socket("http://51.254.124.136:8000"));
-        } catch (URISyntaxException e) {}
+        }
+        catch (URISyntaxException e) {}
+
+        // Gestion socket
         mSocket = SocketManager.getMySocket();
         mSocket.connect();
         mSocket.on("RTrySignIn", onRTrySignIn);
-
-        initSignUpButton();
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         connexionDebug = (Button) findViewById(R.id.connexionDebug);
         User user = new User("test@test.fr", "test");
         JSONObject jsonUser = user.toJson();
-        System.out.println("TrySignIn" + jsonUser);
+        Log.d("login", "TrySignIn : " + jsonUser);
         mSocket.emit("TrySignIn", jsonUser);
         pass = "test";
     }
@@ -120,21 +120,14 @@ public class MainActivity extends AppCompatActivity {
         //Test de connexion
         User user = new User(email, pass);
         JSONObject jsonUser = user.toJson();
-        System.out.println("TrySignIn" + jsonUser);
+        Log.d("login", "TrySignIn : " + jsonUser);
         mSocket.emit("TrySignIn", jsonUser);
 
     }
 
-    private void initSignUpButton() {
-        signUpButton = (Button) findViewById(R.id.signUpButton);
-        signUpButton.setBackgroundColor(WifWafColor.BROWN_DARK);
+    public void signup(View view){
         final Intent signUp = new Intent(getApplicationContext(), SignUpActivity.class);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(signUp);
-            }
-        });
+        startActivity(signUp);
     }
 
     private Emitter.Listener onRTrySignIn = new Emitter.Listener() {
@@ -144,16 +137,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     JSONObject param = (JSONObject) args[0];
-                    System.out.println(param);
                     try {
                         String realpass = (String) param.get("password");
                         String typedpassencrypt = User.encryptPassword(pass);
-                        int id = Integer.parseInt(param.get("id").toString());
+                        int id = Integer.parseInt(param.get("idUser").toString());
                         if(realpass.equals(typedpassencrypt) && id != -1){
                             User newUser = new User(param);
                             SocketManager.setMyUser(newUser);
                             Intent resultat = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(resultat);
+                            finish();
                         }
                         else{
                             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();

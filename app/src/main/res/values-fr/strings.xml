@@ -18,7 +18,7 @@
     <string name="action_home">Accueil</string>
     <string name="title_activity_user_dogs">Mes Chiens</string>
     <string name="action_dogs">Chiens</string>
-    <string name="title_activity_add_dog">Ajout d\'un Chien</string>
+    <string name="title_activity_add_dog">Ajouter un Chien</string>
     <string name="button_add_dog">Ajout d\'un Chien</string>
     <string name="button_sign_in">Inscription</string>
     <string name="age">Age</string>
@@ -32,5 +32,12 @@
     <string name="size">Taille</string>
     <string name="title_activity_add_walk">Ajouter une balade</string>
     <string name="title_activity_dog_profile">Profil du chien</string>
-    <string name="title_activity_walk_profile">Mes balades</string>
+    <string name="timeStamp">Définissez l\'heure de départ</string>
+    <string name="cancel">Annuler</string>
+    <string name="title_prompt_select_dogs">Sélectionnez les chiens participant à cette balade</string>
+    <string name="title_activity_user_walks">Mes Balades</string>
+    <string name="save">Sauvegarder</string>
+    <string name="seeProfile"></string>
+    <string name="hello_world"></string>
+    <string name="TraceByDrawing"></string>
 </resources>

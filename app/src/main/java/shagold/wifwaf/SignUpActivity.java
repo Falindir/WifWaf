@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,16 +38,14 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        //Ecoute evenement
         mSocket = SocketManager.getMySocket();
-        mSocket.on("onTestString", onTestString);
-        mSocket.on("onTestJson", onTestJson);
-        mSocket.on("onTestJsonArray", onTestJsonArray);
         mSocket.on("RTrySignUp", onRTrySignUp);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_empty, menu);
         return true;
     }
@@ -61,8 +58,6 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // TODO faire socket.off pour chaque event écouté
-        mSocket.off("RTrySignUp", onRTrySignUp);
     }
 
     public void showDatePickerDialog(View v) {
@@ -239,7 +234,7 @@ public class SignUpActivity extends AppCompatActivity {
                 public void run() {
                     JSONObject param = (JSONObject) args[0];
                     try {
-                        if((int)param.get("id") < 0) { //TODO faire un traitement spécifique pour chaque erreur?
+                        if((int)param.get("idUser") < 0) { //TODO faire un traitement spécifique pour chaque erreur?
                            AlertDialog alertDialog = new AlertDialog.Builder(SignUpActivity.this).create();
                             alertDialog.setTitle("Erreur");
                             alertDialog.setMessage("Cette adresse mail est déjà utilisée"); //TODO internationalisation
@@ -256,8 +251,8 @@ public class SignUpActivity extends AppCompatActivity {
                             Intent resultat = new Intent(SignUpActivity.this, HomeActivity.class);
                             System.out.println("[Réussite inscription]"+param);
                             SocketManager.setMyUser(mUser);
-
                             startActivity(resultat);
+                            finish();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
