@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
@@ -74,14 +76,51 @@ public class DogProfileActivity extends AppCompatActivity {
         EditText dogDescription = (EditText) findViewById(R.id.dogProfileDescription);
         dogDescription.setText(dog.getDescription());
 
-        EditText dogAge = (EditText) findViewById(R.id.dogProfileAge);
-        dogAge.setText(Integer.toString(dog.getAge()));
-
         EditText dogBreed = (EditText) findViewById(R.id.dogProfilebreed);
         dogBreed.setText(dog.getBreed());
 
-        EditText dogSize = (EditText) findViewById(R.id.dogProfileSize);
-        dogSize.setText(Integer.toString(dog.getSize()));
+        final TextView dogAgeValue = (TextView) findViewById(R.id.dogAgeProfileValue);
+        String age = String.valueOf(Double.parseDouble(dog.getAge()));
+        dogAgeValue.setText(age);
+        SeekBar ageControl = (SeekBar) findViewById(R.id.ageDogProfileSeek);
+        int ageV = (int) (Double.parseDouble(dog.getAge()) * 10);
+        ageControl.setProgress(ageV);
+        ageControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            double progressChanged = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChanged = ((double) progress) / 10;
+                dogAgeValue.setText(String.valueOf(progressChanged));
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        final TextView dogSizeValue = (TextView) findViewById(R.id.dogSizeProfileValue);
+        dogSizeValue.setText(Integer.toString(dog.getSize()));
+        SeekBar sizeControl = (SeekBar) findViewById(R.id.sizeDogProfileSeek);
+        sizeControl.setProgress(dog.getSize() - 1);
+        sizeControl.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int progressChanged = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressChanged = progress + 1;
+                dogSizeValue.setText(String.valueOf(progressChanged));
+            }
+
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
 
         EditText dogGAWM = (EditText) findViewById(R.id.dogProfilegetAlongWithMales);
         dogGAWM.setText(dog.getGetAlongWithMales());
@@ -103,9 +142,9 @@ public class DogProfileActivity extends AppCompatActivity {
 
         //Récupération des valeurs
         EditText ETname = (EditText) findViewById(R.id.dogProfileName);
-        EditText ETage = (EditText) findViewById(R.id.dogProfileAge);
+        TextView ETage = (TextView) findViewById(R.id.dogAgeProfileValue);
         EditText ETbreed = (EditText) findViewById(R.id.dogProfilebreed);
-        EditText ETsize = (EditText) findViewById(R.id.dogProfileSize);
+        TextView ETsize = (TextView) findViewById(R.id.dogSizeProfileValue);
         EditText ETGetalongwithMales = (EditText) findViewById(R.id.dogProfilegetAlongWithMales);
         EditText ETGetalongwithFemales = (EditText) findViewById(R.id.dogProfilegetAlongWithFemales);
         EditText ETGetalongwithKids = (EditText) findViewById(R.id.dogProfilegetAlongWithKids);
@@ -113,13 +152,8 @@ public class DogProfileActivity extends AppCompatActivity {
         EditText ETDescription = (EditText) findViewById(R.id.dogProfileDescription);
         Spinner Ssex = (Spinner) findViewById(R.id.dogProfileGender);
         String gender = Ssex.getSelectedItem().toString();
-        boolean sGender;
-        if (gender.equals("Male")){
-            sGender = true;
-        }
-        else{
-            sGender = false;
-        }
+
+        boolean sGender = gender.equals("male");
 
         //Test validité des champs
         TextValidator textValidator = new TextValidator();
@@ -133,20 +167,6 @@ public class DogProfileActivity extends AppCompatActivity {
             ETname.setError(vmName.getError().toString() + " min: " + min + " max: " + max);
         }
 
-        //Age
-       /* ValidateMessage vmAge = textValidator.validate(ETage, filterNumber);
-        if(!vmAge.getValue()) {
-            valid = false;
-            if (vmAge.getError().equals(ErrorMessage.SIZE)){
-                int min = ((SizeFilter) filterSize[0]).getMin();
-                int max = ((SizeFilter) filterSize[0]).getMax();
-                ETage.setError(vmAge.getError().toString() + " min: " + min + " max: " + max);
-            }
-            else{
-                ETage.setError(vmAge.getError().toString());
-            }
-        }*/
-
         //Breed
         ValidateMessage vmBreed = textValidator.validate(ETbreed, filterSize);
         if(!vmBreed.getValue()) {
@@ -155,20 +175,6 @@ public class DogProfileActivity extends AppCompatActivity {
             int max = ((SizeFilter) filterSize[0]).getMax();
             ETbreed.setError(vmBreed.getError().toString() + " min: " + min + " max: " + max);
         }
-
-        //Size
-        /*ValidateMessage vmSize = textValidator.validate(ETsize, filterNumber);
-        if(!vmSize.getValue()) {
-            valid = false;
-            if (vmSize.getError().equals(ErrorMessage.SIZE)){
-                int min = ((SizeFilter) filterSize[0]).getMin();
-                int max = ((SizeFilter) filterSize[0]).getMax();
-                ETsize.setError(vmSize.getError().toString() + " min: " + min + " max: " + max);
-            }
-            else{
-                ETsize.setError(vmSize.getError().toString());
-            }
-        }*/
 
         //Get along...
         ValidateMessage vmGAWM = textValidator.validate(ETGetalongwithMales, filterSize);
@@ -213,7 +219,7 @@ public class DogProfileActivity extends AppCompatActivity {
         }
 
         //Récupération valeurs des champs
-        int age = Integer.parseInt(ETage.getText().toString());
+        String age = ETage.getText().toString();
         int size = Integer.parseInt(ETsize.getText().toString());
         String Sbreed = ETbreed.getText().toString();
         String Sname = ETname.getText().toString();

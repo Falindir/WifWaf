@@ -1,5 +1,9 @@
 package shagold.wifwaf.tool;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class WifWafWalkDeparture {
@@ -48,5 +52,26 @@ public class WifWafWalkDeparture {
     public String getFormattedTime() {
         String[] s = getTime().split(":");
         return s[0] + ":" + s[1];
+    }
+
+    public boolean isTooLate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar current = Calendar.getInstance();
+        Calendar dep = Calendar.getInstance();
+
+        Date d = current.getTime();
+        String currentS = sdf.format(d);
+        String depS = getDate();
+
+        try {
+            current.setTime(sdf.parse(currentS));
+            dep.setTime(sdf.parse(depS));
+            return dep.before(current);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

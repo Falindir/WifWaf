@@ -87,4 +87,5 @@
     <string name="selected_dogs">Dogs selected :</string>
     <string name="select_date">Select date</string>
     <string name="modify_date">Modify date</string>
+    <string name="modify_time">Modify time</string>
 </resources>

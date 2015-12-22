@@ -13,7 +13,8 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context="shagold.wifwaf.WalkProfileActivity"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:id="@+id/walkProfileLayout">
 
         <TextView
             android:layout_width="match_parent"
@@ -31,11 +32,10 @@
             android:layout_height="match_parent"
             android:text="@string/city"/>
 
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/walkCity"
-            android:inputType="text" />
+            android:id="@+id/walkCity"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -48,11 +48,37 @@
             android:id="@+id/walkDescription"
             android:inputType="text" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/date"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/walkDateDeparture"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/walkDogs"
-            android:onClick="walkDogs"/>
+            android:text="@string/modify_date"
+            android:onClick="showDatePickerDialog" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/time"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/walkTimeDeparture"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modify_time"
+            android:onClick="showTimePickerDialog" />
 
         <Button
             android:layout_width="wrap_content"
@@ -60,12 +86,26 @@
             android:text="@string/viewPath"
             android:onClick="viewPathWalk"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/useWalk"
+            android:onClick="useWalk"/>
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete_black_24dp"
             android:id="@+id/deleteWalkButton"
             android:onClick="deleteWalk"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/applyChangeWalkProfile"
+            android:layout_gravity="center_horizontal"
+            android:onClick="saveChangeWalk"/>
 
     </LinearLayout>
 </ScrollView>

@@ -15,19 +15,47 @@
         tools:context="shagold.wifwaf.DogProfileActivity"
         android:focusableInTouchMode="true">
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dogProfileName"
             android:inputType="text" />
 
-        <EditText
+        <ImageView
+            android:id="@+id/avatarDog"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            tools:background="#AAA" />
+
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:hint="@string/age"
-            android:id="@+id/dogProfileAge" />
+            android:text="@string/age" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dogAgeProfileValue"
+            android:text="0" />
+
+        <SeekBar
+            android:id="@+id/ageDogProfileSeek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:progress="0"
+            android:max="200"
+            android:secondaryProgress="0" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gender" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -35,11 +63,10 @@
             android:id="@+id/dogProfileGender"
             android:prompt="@string/promptGender"/>
 
-        <ImageView
-            android:id="@+id/avatarDog"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            tools:background="#AAA" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/breed" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -48,13 +75,30 @@
             android:hint="@string/breed"
             android:id="@+id/dogProfilebreed" />
 
-        <EditText
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:hint="@string/size"
-            android:id="@+id/dogProfileSize" />
+            android:text="@string/size" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dogSizeProfileValue"
+            android:text="1" />
+
+        <SeekBar
+            android:id="@+id/sizeDogProfileSeek"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:max="9"
+            android:progress="0"
+            android:secondaryProgress="0" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/getAlongWithMales" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -63,12 +107,22 @@
             android:hint="@string/getAlongWithMales"
             android:id="@+id/dogProfilegetAlongWithMales" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/getAlongWithFemales" />
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithFemales"
             android:id="@+id/dogProfilegetAlongWithFemales" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/getAlongWithKids" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -77,12 +131,22 @@
             android:hint="@string/getAlongWithKids"
             android:id="@+id/dogProfilegetAlongWithKids" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/getAlongWithHumans" />
+
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithHumans"
             android:id="@+id/dogProfilegetAlongWithHumans" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
 
         <EditText
             android:layout_width="fill_parent"

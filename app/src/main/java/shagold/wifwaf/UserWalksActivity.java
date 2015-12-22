@@ -80,7 +80,7 @@ public class UserWalksActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     List<Walk> walks = Walk.generateWalksFromJSON((JSONArray) args[0]);
-                    WalkAdapter adapter = new WalkAdapter(UserWalksActivity.this, walks);
+                    WalkAdapter adapter = new WalkAdapter(UserWalksActivity.this, walks, true);
                     mListView.setAdapter(adapter);
                 }
             });

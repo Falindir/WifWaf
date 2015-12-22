@@ -139,20 +139,6 @@ public class AddDogActivity extends AppCompatActivity {
             ETname.setError(vmName.getError().toString() + " min: " + min + " max: " + max);
         }
 
-        //Age
-       /* ValidateMessage vmAge = textValidator.validate(ETage, filterNumber);
-        if(!vmAge.getValue()) {
-            valid = false;
-            if (vmAge.getError().equals(ErrorMessage.SIZE)){
-                int min = ((SizeFilter) filterSize[0]).getMin();
-                int max = ((SizeFilter) filterSize[0]).getMax();
-                ETage.setError(vmAge.getError().toString() + " min: " + min + " max: " + max);
-            }
-            else{
-                ETage.setError(vmAge.getError().toString());
-            }
-        }*/
-
         //Breed
         ValidateMessage vmBreed = textValidator.validate(ETbreed, filterSize);
         if(!vmBreed.getValue()) {
@@ -161,20 +147,6 @@ public class AddDogActivity extends AppCompatActivity {
             int max = ((SizeFilter) filterSize[0]).getMax();
             ETbreed.setError(vmBreed.getError().toString() + " min: " + min + " max: " + max);
         }
-
-        //Size
-        /*ValidateMessage vmSize = textValidator.validate(ETsize, filterNumber);
-        if(!vmSize.getValue()) {
-            valid = false;
-            if (vmSize.getError().equals(ErrorMessage.SIZE)){
-                int min = ((SizeFilter) filterSize[0]).getMin();
-                int max = ((SizeFilter) filterSize[0]).getMax();
-                ETsize.setError(vmSize.getError().toString() + " min: " + min + " max: " + max);
-            }
-            else{
-                ETsize.setError(vmSize.getError().toString());
-            }
-        }*/
 
         //Get along...
         ValidateMessage vmGAWM = textValidator.validate(ETGetalongwithMales, filterSize);
@@ -219,7 +191,7 @@ public class AddDogActivity extends AppCompatActivity {
         }
 
         //Récupération valeurs des champs
-        int age = Integer.parseInt(ETage.getText().toString());
+        String age = ETage.getText().toString();
         int size = Integer.parseInt(ETsize.getText().toString());
         String Sbreed = ETbreed.getText().toString();
         String Sname = ETname.getText().toString();

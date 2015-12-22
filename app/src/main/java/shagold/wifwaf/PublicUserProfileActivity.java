@@ -1,6 +1,7 @@
 package shagold.wifwaf;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -8,6 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,10 +69,20 @@ public class PublicUserProfileActivity extends AppCompatActivity {
 
         userDogsDialog.setTitle("User Dogs");
 
-        ListView modeList = new ListView(PublicUserProfileActivity.this);
+        final ListView modeList = new ListView(PublicUserProfileActivity.this);
         modeList.setAdapter(adapter);
 
         userDogsDialog.setView(modeList);
+
+        modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Dog dog = (Dog) modeList.getItemAtPosition(position);
+                Intent clickedWalkProfile = new Intent(getApplicationContext(), PublicDogProfileActivity.class);
+                clickedWalkProfile.putExtra("DOG", dog);
+                startActivity(clickedWalkProfile);
+            }
+        });
 
         AlertDialog alertDogs = userDogsDialog.create();
         alertDogs.show();
