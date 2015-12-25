@@ -12,7 +12,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="shagold.wifwaf.AddWalkActivity"
+        tools:context=".AddWalkActivity"
         android:focusableInTouchMode="true"
         android:id="@+id/addWalkLayout">
 
@@ -30,43 +30,76 @@
             android:hint="@string/description"
             android:id="@+id/descriptionWalk" />
 
-        <TextView
-            android:text="@string/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dateAddWalk"/>
+            android:layout_marginTop="10dp">
 
-        <Button
-            android:layout_width="wrap_content"
+            <TextView
+                android:text="@string/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Title.TextView"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dateAddWalk"
+                style="@style/Title.TextView"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_date"
+                android:layout_alignParentRight="true"
+                android:onClick="choseDate" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:onClick="choseDate" />
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:text="@string/timeStamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/timeStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Title.TextView"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeStampAddWalk"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timeStampAddWalk"
+                style="@style/Title.TextView"
+                android:layout_centerInParent="true"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/timeStamp"
-            android:onClick="choseTimeStamp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/timeStamp"
+                android:layout_alignParentRight="true"
+                android:onClick="choseTimeStamp" />
+
+         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_prompt_select_dogs"
-            android:id="@+id/selectDogs"/>
+            android:id="@+id/selectDogs"
+            style="@style/Title.TextView"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold" />
         
         <Button
             android:layout_width="match_parent"
@@ -74,7 +107,8 @@
             android:text="@string/TraceByWalking"
             android:id="@+id/addWalkWalkingButton"
             android:layout_gravity="center_horizontal"
-            android:onClick="walkingWalk"/>
+            android:onClick="walkingWalk"
+            android:layout_marginTop="10dp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -82,7 +116,8 @@
             android:text="@string/TraceByDrawing"
             android:id="@+id/addWalkDrawingButton"
             android:layout_gravity="center_horizontal"
-            android:onClick="drawingWalk"/>
+            android:onClick="drawingWalk"
+            android:layout_marginTop="10dp"/>
 
 
     </LinearLayout>

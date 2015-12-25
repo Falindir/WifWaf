@@ -1,4 +1,4 @@
-package shagold.wifwaf.list;
+package shagold.wifwaf.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,7 +40,7 @@ public class DogAdapter extends ArrayAdapter<Dog> {
         if(viewHolder == null){
             viewHolder = new DogViewHolder();
             viewHolder.setName((TextView) convertView.findViewById(R.id.nameRowDog));
-            viewHolder.setDescription((TextView) convertView.findViewById(R.id.descriptionRowDog));
+            //viewHolder.setDescription((TextView) convertView.findViewById(R.id.descriptionRowDog));
             viewHolder.setAvatar((ImageView) convertView.findViewById(R.id.avatarRowDog));
             viewHolder.setButton((ImageButton) convertView.findViewById(R.id.deleteDogButton));
             convertView.setTag(viewHolder);
@@ -48,7 +48,7 @@ public class DogAdapter extends ArrayAdapter<Dog> {
 
         final Dog dog = getItem(position);
         viewHolder.getName().setText(dog.getName());
-        viewHolder.getDescription().setText(dog.getDescription());
+        //viewHolder.getDescription().setText(dog.getDescription());
         viewHolder.getAvatar().setImageResource(viewHolder.getDefaultAvatar());
         viewHolder.getButton().setFocusable(false);
         viewHolder.getButton().setOnClickListener(new View.OnClickListener() {

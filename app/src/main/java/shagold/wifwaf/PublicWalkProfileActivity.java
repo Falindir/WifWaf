@@ -4,11 +4,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,13 +17,15 @@ import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import shagold.wifwaf.dataBase.Dog;
+import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.dataBase.Walk;
-import shagold.wifwaf.list.DogPublicAdapter;
+import shagold.wifwaf.adapter.DogPublicAdapter;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.tool.WifWafWalkDeparture;
@@ -31,6 +33,9 @@ import shagold.wifwaf.tool.WifWafWalkDeparture;
 public class PublicWalkProfileActivity extends AppCompatActivity {
 
     private Walk walk;
+    private Socket mSocket;
+    private User mUser;
+    private User SendToUser;
     private ArrayList<Dog> dogWalk = new ArrayList<Dog>();
 
     @Override
@@ -38,12 +43,15 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public_walk_profile);
 
+        //on veut récupérer les infos du user propriétaire de la balade pour pouvoir lui envoyer un sms
+        mSocket = SocketManager.getMySocket();
+//        mSocket.emit("getUserById", walk.getIdUser());
+        mUser = SocketManager.getMyUser();
+        mSocket.on("RGetUser", onRGetUser);
+
         walk = (Walk) getIntent().getSerializableExtra("WALK");
 
-        Socket mSocket = SocketManager.getMySocket();
-
         for(Dog d : walk.getDogs()) {
-            mSocket = SocketManager.getMySocket();
             System.out.println("ID-DOG- " + d.getIdDog());
             mSocket.emit("getDogById", d.getIdDog());
         }
@@ -85,6 +93,18 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
         startActivity(resultat);
     }
 
+    public void sendNotif(View view){
+        //SmsManager mySms = null;
+
+        /*int hisAddress = SendToUser.getPhoneNumber();
+        String hisAddressString =  Integer.toString(hisAddress);
+        int myAddress = mUser.getPhoneNumber();
+        String myAddressString = Integer.toString(myAddress);
+        String text = "Hello " + mUser.getNickname() + ", the user " + SendToUser.getNickname() + " would like to join you on " + walk.getTitle() + ". " + "He will surely contact you soon" ;
+        mySms.sendTextMessage(hisAddressString, myAddressString, text, null, null);*/
+
+    }
+
     public void viewPath(View view) {
         Intent resultat = new Intent(PublicWalkProfileActivity.this, PublicPathProfileActivity.class);
         resultat.putExtra("WALK", walk);
@@ -107,6 +127,7 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
 
         final ListView modeList = new ListView(PublicWalkProfileActivity.this);
         modeList.setAdapter(adapter);
+        modeList.setDividerHeight(modeList.getDividerHeight()*3);
 
         modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -139,6 +160,23 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                }
+            });
+        }
+
+    };
+
+    private Emitter.Listener onRGetUser = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            PublicWalkProfileActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        SendToUser = new User((JSONObject) args[0]);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }

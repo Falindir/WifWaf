@@ -3,7 +3,6 @@ package shagold.wifwaf;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,7 @@ import org.json.JSONException;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
-import shagold.wifwaf.tool.WifWafDatePickerFragment;
+import shagold.wifwaf.fragment.WifWafDatePickerFragment;
 import shagold.wifwaf.tool.WifWafUserBirthday;
 
 public class UserProfileActivity extends AppCompatActivity {

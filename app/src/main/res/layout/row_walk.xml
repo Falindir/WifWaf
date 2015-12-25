@@ -22,7 +22,8 @@
         android:layout_toRightOf="@+id/avatarRowWalk"
         android:layout_alignTop="@+id/avatarRowWalk"
         android:textStyle="bold"
-        tools:text="Title"
+        android:textSize="18sp"
+        tools:text="@string/name"
         />
 
     <TextView
@@ -32,7 +33,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/titleRowWalk"
         android:layout_below="@+id/titleRowWalk"
-        tools:text="city"
+        tools:text="@string/city"
         />
 
     <TextView
@@ -42,7 +43,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/cityRowWalk"
         android:layout_below="@+id/cityRowWalk"
-        tools:text="description"
+        tools:text="@string/description"
         />
 
     <TextView
@@ -52,7 +53,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/descriptionRowWalk"
         android:layout_below="@+id/descriptionRowWalk"
-        tools:text="date"
+        tools:text="@string/date"
         />
 
     <TextView
@@ -62,6 +63,6 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/dateRowWalk"
         android:layout_below="@+id/dateRowWalk"
-        tools:text="time"
+        tools:text="@string/time"
         />
 </RelativeLayout>

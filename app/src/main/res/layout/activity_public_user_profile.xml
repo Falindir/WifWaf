@@ -12,68 +12,90 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="shagold.wifwaf.PublicUserProfileActivity">
+        tools:context=".PublicUserProfileActivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
             android:text="@string/name"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/userProfileName" />
 
         <ImageView
             android:id="@+id/avatarPublicUserProfile"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             tools:background="#AAA"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/email"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/userProfileMail" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/birthday"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/userProfileBirthday" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/phone"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/userProfilePhoneNumber" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/description"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/userProfileDescription" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/userDogs"
+            android:layout_marginTop="10dp"
             android:onClick="userDogs"/>
 
     </LinearLayout>

@@ -8,14 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -28,16 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shagold.wifwaf.dataBase.Dog;
+import shagold.wifwaf.dataBase.Location;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.dataBase.Walk;
-import shagold.wifwaf.list.DogPublicAdapter;
+import shagold.wifwaf.fragment.WifWafWalkChangeFragment;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.tool.WifWafColor;
-import shagold.wifwaf.tool.WifWafDatePickerFragment;
-import shagold.wifwaf.tool.WifWafTimePickerFragment;
+import shagold.wifwaf.fragment.WifWafDatePickerFragment;
+import shagold.wifwaf.fragment.WifWafTimePickerFragment;
+import shagold.wifwaf.tool.WifWafWalkComparator;
 import shagold.wifwaf.tool.WifWafWalkDeparture;
-import shagold.wifwaf.view.filter.text.EditTextFilter;
 
 public class WalkProfileActivity extends AppCompatActivity {
 
@@ -141,7 +138,7 @@ public class WalkProfileActivity extends AppCompatActivity {
 
                     JSONArray dogsJSON = (JSONArray) args[0];
                     userDogs = Dog.generateDogsFromJson(dogsJSON);
-                    int index = 12;
+                    int index = 9;
                     for (Dog dog : userDogs) {
                         CheckBox cb = new CheckBox(WalkProfileActivity.this);
                         cb.setText(dog.getName());
@@ -157,9 +154,13 @@ public class WalkProfileActivity extends AppCompatActivity {
                                 if (isChecked)
                                     dogWalk.add(dogCB);
                                 else {
-                                    for(Dog d : dogWalk) {
-                                        if(d.getIdDog() == dogCB.getIdDog()) {
-                                            dogWalk.remove(d);
+                                    Dog[] dw = new Dog[dogWalk.size()];
+                                    for(int i = 0; i < dogWalk.size(); i++)
+                                        dw[i] = dogWalk.get(i);
+
+                                    for(int j = 0; j < dw.length; j++) {
+                                        if(dw[j].getIdDog() == dogCB.getIdDog()) {
+                                            dogWalk.remove(j);
                                         }
                                     }
                                 }
@@ -195,8 +196,20 @@ public class WalkProfileActivity extends AppCompatActivity {
 
     public void useWalk(View view) {
         Intent result = new Intent(WalkProfileActivity.this, UseWalkActivity.class);
-        result.putExtra("WALK", walk);
-        startActivity(result);
+
+        WifWafWalkComparator wc = new WifWafWalkComparator(walk);
+
+        Walk newWalk = getWalk();
+
+        if(wc.isSameWalk(newWalk)) {
+            result.putExtra("WALK", walk);
+            startActivity(result);
+        }
+        else {
+            WifWafWalkChangeFragment newFragment = new WifWafWalkChangeFragment();
+            newFragment.setWalk(newWalk);
+            newFragment.show(getSupportFragmentManager(), "useWalk");
+        }
     }
 
     public void showDatePickerDialog(View view) {
@@ -215,7 +228,40 @@ public class WalkProfileActivity extends AppCompatActivity {
 
     public void saveChangeWalk(View view) {
 
-        // TODO save change
+        WifWafWalkComparator wc = new WifWafWalkComparator(walk);
 
+        Walk newWalk = getWalk();
+
+        if(!wc.isSameWalk(newWalk)) {
+            // TODO emit save
+        }
+        else {
+            Intent result = new Intent(WalkProfileActivity.this, UserWalksActivity.class);
+            startActivity(result);
+        }
+    }
+
+    private Walk getWalk() {
+
+        EditText walkTitle = (EditText) findViewById(R.id.walkTitle);
+        String name = walkTitle.getText().toString();
+
+        EditText walkDescription = (EditText) findViewById(R.id.walkDescription);
+        String description = walkDescription.getText().toString();
+
+        TextView dateDepartureWalk = (TextView) findViewById(R.id.walkDateDeparture);
+        String date = dateDepartureWalk.getText().toString();
+
+        TextView timeDepartureWalk = (TextView) findViewById(R.id.walkTimeDeparture);
+        String time = timeDepartureWalk.getText().toString();
+
+        String departure = date + " " + time;
+
+        Walk newWalk = new Walk(walk.getIdUser(), name, description, walk.getCity(), departure, dogWalk);
+
+        for(Location location : walk.getPath())
+            newWalk.addLocationToWalk(location.getLattitude(), location.getLongitude());
+
+        return newWalk;
     }
 }

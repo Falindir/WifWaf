@@ -7,8 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,12 +19,18 @@ import android.widget.TextView;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import shagold.wifwaf.dataBase.Behaviour;
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
+import shagold.wifwaf.tool.WifWafColor;
 import shagold.wifwaf.view.TextValidator;
 import shagold.wifwaf.view.ValidateMessage;
 import shagold.wifwaf.view.filter.text.EditTextFilter;
@@ -31,7 +40,9 @@ import shagold.wifwaf.view.filter.text.SizeFilter;
 public class DogProfileActivity extends AppCompatActivity {
 
     private Dog dog;
+    private ArrayList<Behaviour> selectedBehaviours = new ArrayList<Behaviour>();
     private Socket mSocket;
+    private LinearLayout actlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +50,10 @@ public class DogProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dog_profile);
 
         mSocket = SocketManager.getMySocket();
+        mSocket.emit("getAllBehaviours");
         mSocket.on("RUpdateDog", onRUpdateDog);
+        mSocket.on("RGetAllBehaviours", onRGetAllBehaviours);
+
         dog = (Dog) getIntent().getSerializableExtra("DOG");
 
         // Remplissage des champs pour modif
@@ -230,11 +244,54 @@ public class DogProfileActivity extends AppCompatActivity {
         String Sdescription = ETDescription.getText().toString();
 
         //Update d'un chien
-        Dog updatedDog = new Dog(dog.getIdDog(), dog.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender);
+        Dog updatedDog = new Dog(dog.getIdDog(), dog.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours);
         JSONObject jsonDog = updatedDog.toJsonWithId();
         mSocket.emit("updateDog", jsonDog);
         System.out.println("jsondog" + jsonDog);
     }
+
+    private Emitter.Listener onRGetAllBehaviours = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args)  {
+            DogProfileActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONArray listBehaviour =  (JSONArray) args[0];
+
+                    for (int i = 0; i < listBehaviour.length(); i++) {
+                        JSONObject currentObj = null;
+                        try {
+                            currentObj = listBehaviour.getJSONObject(i);
+                            int idBehaviour = currentObj.getInt("idBehaviour");
+                            String desc = currentObj.getString("description");
+                            final Behaviour currentB = new Behaviour(idBehaviour, desc);
+                            CheckBox cb = new CheckBox(getApplicationContext());
+                            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    if (isChecked)
+                                        selectedBehaviours.add(currentB);
+                                    else
+                                        selectedBehaviours.remove(currentB);
+                                }
+                            });
+                            cb.setText(currentB.getDescription());
+                            cb.setId(currentB.getIdBehaviour());
+                            cb.setTextColor(WifWafColor.BLACK);
+                            for(Behaviour b:dog.getBehaviours()){
+                                if (b.getIdBehaviour() == currentB.getIdBehaviour()){
+                                    cb.setChecked(true);
+                                }
+                            }
+                            actlayout = (LinearLayout) findViewById(R.id.layoutDogProfile);
+                            actlayout.addView(cb, 16);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    };
 
     private Emitter.Listener onRUpdateDog = new Emitter.Listener() {
         @Override
@@ -247,6 +304,5 @@ public class DogProfileActivity extends AppCompatActivity {
                 }
             });
         }
-
     };
 }

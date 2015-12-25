@@ -26,11 +26,15 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/age" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/age" />
 
         <SeekBar
@@ -41,6 +45,21 @@
             android:progress="0"
             android:max="200"
             android:secondaryProgress="0" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="@string/description"
+            android:id="@+id/description" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gender"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <Spinner
             android:layout_width="match_parent"
@@ -57,11 +76,15 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"
             android:text="@string/size" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/size" />
 
         <SeekBar
@@ -72,6 +95,14 @@
             android:max="9"
             android:progress="0"
             android:secondaryProgress="0" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/behaviour" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -101,19 +132,13 @@
             android:hint="@string/getAlongWithHumans"
             android:id="@+id/getAlongWithHumans" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:hint="@string/description"
-            android:id="@+id/description" />
-
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/confirm"
             android:id="@+id/confirmAddDogButton"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:onClick="tryAddDog"/>
     </LinearLayout>
 </ScrollView>

@@ -1,4 +1,4 @@
-package shagold.wifwaf.list;
+package shagold.wifwaf.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -40,6 +40,7 @@ public class DogPublicAdapter extends ArrayAdapter<Dog> {
             viewHolder.setName((TextView) convertView.findViewById(R.id.namePublicRowDog));
             viewHolder.setDescription((TextView) convertView.findViewById(R.id.descriptionPublicRowDog));
             viewHolder.setAvatar((ImageView) convertView.findViewById(R.id.avatarPublicRowDog));
+            viewHolder.setGender((TextView) convertView.findViewById(R.id.genderPublicRowDog));
             convertView.setTag(viewHolder);
         }
 
@@ -47,6 +48,11 @@ public class DogPublicAdapter extends ArrayAdapter<Dog> {
         viewHolder.getName().setText(dog.getName());
         viewHolder.getDescription().setText(dog.getDescription());
         viewHolder.getAvatar().setImageResource(viewHolder.getDefaultAvatar());
+        if(dog.isMale())
+            viewHolder.getGender().setText(getContext().getString(R.string.male));
+        else
+            viewHolder.getGender().setText(getContext().getString(R.string.female));
+
 
         return convertView;
     }

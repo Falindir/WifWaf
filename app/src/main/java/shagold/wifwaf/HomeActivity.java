@@ -14,7 +14,7 @@ import java.util.List;
 
 import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.manager.MenuManager;
-import shagold.wifwaf.list.WalkAdapter;
+import shagold.wifwaf.adapter.WalkAdapter;
 import shagold.wifwaf.manager.SocketManager;
 
 import com.github.nkzawa.emitter.Emitter;

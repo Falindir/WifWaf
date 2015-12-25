@@ -43,8 +43,10 @@ import shagold.wifwaf.tool.Constants;
 public class DrawingWalkActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
+    private Marker lastAddedM = null;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+    private PolylineOptions temp;
     private Marker myLocation;
     private PolylineOptions lines = new PolylineOptions();
     private LinkedList<LatLng> linesLatLng = new LinkedList<LatLng>();
@@ -53,6 +55,7 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
     private boolean startPoint = true;
     private Socket mSocket;
     private Walk walk;
+    Context context;
 
     class AddressResultReceiver extends ResultReceiver {
         public AddressResultReceiver(Handler h) {
@@ -60,9 +63,9 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
         }
 
         @Override
-        protected void onReceiveResult(int codeResultat, Bundle donneesResult) {
-            if (codeResultat == Constants.SUCCESS_RESULT)
-                walk.setCity(donneesResult.getString(Constants.RESULT_DATA_KEY));
+        protected void onReceiveResult(int codeResult, Bundle dataResult) {
+            if (codeResult == Constants.SUCCESS_RESULT)
+                walk.setCity(dataResult.getString(Constants.RESULT_DATA_KEY));
         }
     }
 
@@ -100,17 +103,34 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
                     intent.putExtra(Constants.LOCATION_DATA_EXTRA, loc);
                     startService(intent);
                     startPoint = false;
+                    LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+                    //Gestion marker point de départ
+                    myLocation = mMap.addMarker(new MarkerOptions().position(pos).title("Starting point"));
+                    //Gestion toast sélection de pts
+                    CharSequence text = "Please add points to create your walk";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
 
                 if(linesLatLng.size() > 1) {
-                    PolylineOptions temp = new PolylineOptions()
+                    if (lastAddedM != null && temp != null){
+                        lastAddedM.remove();
+                        //ancien point en bleu
+                        temp.color(Color.BLUE);
+                        mMap.addPolyline(temp);
+                    }
+                    temp = new PolylineOptions()
                             .add(linesLatLng.getLast())
                             .add(linesLatLng.get(linesLatLng.size() - 2));
-                    temp.color(Color.BLUE);
+                    temp.color(Color.RED);
                     temp.visible(true);
                     temp.width(10);
                     pl.add(temp);
                     mMap.addPolyline(temp);
+                    LatLng last = linesLatLng.get(linesLatLng.size() -1);
+                    lastAddedM = mMap.addMarker(new MarkerOptions().position(last).title("End"));
                 }
             }
         });
@@ -154,7 +174,7 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapos, 16));
 
         //Affichage 1er toast d'instructions
-        Context context = getApplicationContext();
+        context = getApplicationContext();
         CharSequence text = "Please select where your walk should start";
         int duration = Toast.LENGTH_SHORT;
 

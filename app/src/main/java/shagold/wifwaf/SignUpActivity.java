@@ -20,7 +20,7 @@ import com.github.nkzawa.emitter.Emitter;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
-import shagold.wifwaf.tool.WifWafDatePickerFragment;
+import shagold.wifwaf.fragment.WifWafDatePickerFragment;
 import shagold.wifwaf.view.ErrorMessage;
 import shagold.wifwaf.view.TextValidator;
 import shagold.wifwaf.view.ValidateMessage;

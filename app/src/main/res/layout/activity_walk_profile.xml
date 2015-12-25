@@ -19,6 +19,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textStyle="bold"
+            style="@style/Title.TextView"
             android:text="@string/title"/>
 
         <EditText
@@ -30,16 +32,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"
             android:text="@string/city"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/Title.TextView"
             android:id="@+id/walkCity"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"
             android:text="@string/description"/>
 
         <EditText
@@ -48,56 +57,103 @@
             android:id="@+id/walkDescription"
             android:inputType="text" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                style="@style/Title.TextView"
+                android:text="@string/date"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                style="@style/Title.TextView"
+                android:id="@+id/walkDateDeparture"
+                android:layout_centerInParent="true"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modify_date"
+                android:layout_alignParentRight="true"
+                android:onClick="showDatePickerDialog" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                style="@style/Title.TextView"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="@string/time"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                style="@style/Title.TextView"
+                android:layout_centerInParent="true"
+                android:id="@+id/walkTimeDeparture"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modify_time"
+                android:layout_alignParentRight="true"
+                android:onClick="showTimePickerDialog" />
+
+        </RelativeLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/date"/>
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"
+            android:text="@string/dogsWalk"/>
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/walkDateDeparture"/>
-
-        <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/modify_date"
-            android:onClick="showDatePickerDialog" />
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/time"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/viewPath"
+                android:onClick="viewPathWalk"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/walkTimeDeparture"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_delete_black_24dp"
+                android:id="@+id/deleteWalkButton"
+                android:layout_centerInParent="true"
+                android:onClick="deleteWalk"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/modify_time"
-            android:onClick="showTimePickerDialog" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/useWalk"
+                android:layout_alignParentRight="true"
+                android:onClick="useWalk"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/viewPath"
-            android:onClick="viewPathWalk"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/useWalk"
-            android:onClick="useWalk"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete_black_24dp"
-            android:id="@+id/deleteWalkButton"
-            android:onClick="deleteWalk"/>
+        </RelativeLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -105,6 +161,7 @@
             android:text="@string/save"
             android:id="@+id/applyChangeWalkProfile"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:onClick="saveChangeWalk"/>
 
     </LinearLayout>

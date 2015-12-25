@@ -1,4 +1,4 @@
-package shagold.wifwaf.list;
+package shagold.wifwaf.adapter;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +9,7 @@ public class DogPublicViewHolder {
 
     private TextView name;
     private TextView description;
+    private TextView gender;
     private ImageView avatar;
 
     public DogPublicViewHolder() {}
@@ -41,4 +42,11 @@ public class DogPublicViewHolder {
         return R.drawable.dogi2;
     }
 
+    public TextView getGender() {
+        return gender;
+    }
+
+    public void setGender(TextView gender) {
+        this.gender = gender;
+    }
 }

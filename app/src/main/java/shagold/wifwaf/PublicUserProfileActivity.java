@@ -25,7 +25,7 @@ import java.util.List;
 
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
-import shagold.wifwaf.list.DogPublicAdapter;
+import shagold.wifwaf.adapter.DogPublicAdapter;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.tool.WifWafUserBirthday;
@@ -71,6 +71,7 @@ public class PublicUserProfileActivity extends AppCompatActivity {
 
         final ListView modeList = new ListView(PublicUserProfileActivity.this);
         modeList.setAdapter(adapter);
+        modeList.setDividerHeight(modeList.getDividerHeight()*3);
 
         userDogsDialog.setView(modeList);
 

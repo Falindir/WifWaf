@@ -21,6 +21,7 @@ public class Dog implements Serializable {
     private String getAlongWithHumans;
     private String description;
     private boolean male;
+    private ArrayList<Behaviour> behaviours = new ArrayList<Behaviour>();
 
     public Dog(){}
 
@@ -46,9 +47,25 @@ public class Dog implements Serializable {
         else if("female".equals(dogJson.getString("gender"))) {
             this.male = false;
         }
+        JSONArray trace= (JSONArray) dogJson.get("behaviours");
+        System.out.println(trace);
+        if (trace != null){
+            for (int i = 0; i < trace.length(); i++) {
+                JSONObject currentBehaviour = null;
+                try{
+                    currentBehaviour = trace.getJSONObject(i);
+                    System.out.println(currentBehaviour);
+                    Behaviour newBehaviour = new Behaviour(currentBehaviour);
+                    this.behaviours.add(newBehaviour);
+                    System.out.println("Ajouté dans l'arraylist" + newBehaviour);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public Dog(int idDog, int idUser, String dogName, String age, String breed, int size, String getAlongWithMales, String getAlongWithFemales, String getAlongWithKids, String getAlongWithHumans, String description, boolean male){
+    public Dog(int idDog, int idUser, String dogName, String age, String breed, int size, String getAlongWithMales, String getAlongWithFemales, String getAlongWithKids, String getAlongWithHumans, String description, boolean male, ArrayList<Behaviour> b){
         this.idDog = idDog;
         this.idUser = idUser;
         this.dogName = dogName;
@@ -61,9 +78,10 @@ public class Dog implements Serializable {
         this.getAlongWithHumans = getAlongWithHumans;
         this.description = description;
         this.male = male;
+        this.behaviours = b;
     }
 
-    public Dog(int idUser, String dogName, String age, String breed, int size, String getAlongWithMales, String getAlongWithFemales, String getAlongWithKids, String getAlongWithHumans, String description, boolean male){
+    public Dog(int idUser, String dogName, String age, String breed, int size, String getAlongWithMales, String getAlongWithFemales, String getAlongWithKids, String getAlongWithHumans, String description, boolean male, ArrayList<Behaviour> b){
         this.idUser = idUser;
         this.dogName = dogName;
         this.age = age;
@@ -75,6 +93,7 @@ public class Dog implements Serializable {
         this.getAlongWithHumans = getAlongWithHumans;
         this.description = description;
         this.male = male;
+        this.behaviours = b;
     }
 
     public JSONObject toJson() throws JSONException {
@@ -95,6 +114,11 @@ public class Dog implements Serializable {
         else{
             dogJson.put("gender", "female");
         }
+        JSONArray myBehaviours = new JSONArray();
+        for (Behaviour b : behaviours){
+            myBehaviours.put(b.toJson());
+        }
+        dogJson.put("behaviours", myBehaviours);
         return dogJson;
     }
 
@@ -149,6 +173,10 @@ public class Dog implements Serializable {
     public String getBreed() { return breed; }
 
     public int getSize() { return size; }
+
+    public ArrayList<Behaviour> getBehaviours(){
+        return this.behaviours;
+    }
 
     public boolean isMale() {
         return male;

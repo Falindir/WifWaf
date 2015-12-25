@@ -15,8 +15,6 @@
     <string name="button_sign_up">Sign up</string>
     <string name="button_connect">connection</string>
 
-    <string name="error_email_already_exists">Cette adresse mail est déjà utilisée</string>
-
     <!-- Activity add dog -->
     <string name="title_activity_add_dog">Add Dog</string>
     <string name="name">Name</string>
@@ -45,7 +43,7 @@
     <string name="action_home">Home</string>
     <string name="action_dogs">Dogs</string>
     <string name="connect"></string>
-    <string name="button_sign_in"></string>
+    <string name="button_sign_in">Sign In</string>
 
     <!-- Jimmy add -->
     <string name="user_dogs_prompt">Choose your dogs</string>
@@ -68,7 +66,7 @@
     <string name="city">City</string>
     <string name="useWalk">Use Walk</string>
     <string name="userDogs">User Dogs</string>
-    <string name="walkDogs">Walk Dogs</string>
+    <string name="walkDogs">View the dogs participating to this walk</string>
     <string name="viewPath">View Path</string>
     <string name="departure">Departure</string>
     <string name="timeStamp">At what time?</string>
@@ -87,5 +85,16 @@
     <string name="selected_dogs">Dogs selected :</string>
     <string name="select_date">Select date</string>
     <string name="modify_date">Modify date</string>
+    <string name="like_to_come">I\'d like to come!</string>
     <string name="modify_time">Modify time</string>
+    <string name="behaviour">Behaviour</string>
+    <string name="error_email_already_exists">This e-mail address is already used</string>
+    <string name="not_enough_dogs">Please select at least one dog</string>
+    <string name="oups">Oups...</string>
+    <string name="no_dogs_for_now">You have no dogs for the moment! Please add a dog to WifWaf before adding a walk.</string>
+    <string name="bad_id_pass">Incorrect ID/Password</string>
+    <string name="error">Error</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="dogsWalk">Dogs as the walk</string>
 </resources>

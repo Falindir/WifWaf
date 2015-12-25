@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -22,6 +23,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import shagold.wifwaf.dataBase.Behaviour;
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
@@ -39,6 +43,7 @@ public class AddDogActivity extends AppCompatActivity {
     private User mUser;
     private Button confirmAddDog;
     private LinearLayout actlayout;
+    private ArrayList<Behaviour> selectedBehaviours = new ArrayList<Behaviour>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +207,7 @@ public class AddDogActivity extends AppCompatActivity {
         String Sdescription = ETDescription.getText().toString();
 
         //Test ajout d'un chien
-        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender);
+        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours);
         JSONObject jsonDog = dog.toJson();
         System.out.println("TryAddDog" + jsonDog);
         mSocket.emit("TryAddDog", jsonDog);
@@ -233,12 +238,21 @@ public class AddDogActivity extends AppCompatActivity {
                             currentObj = listBehaviour.getJSONObject(i);
                             int idBehaviour = currentObj.getInt("idBehaviour");
                             String description = currentObj.getString("description");
+                            final Behaviour currentB = new Behaviour(idBehaviour, description);
                             CheckBox cb = new CheckBox(getApplicationContext());
-                            cb.setText(description);
-                            cb.setId(idBehaviour);
+                            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                    if (isChecked)
+                                        selectedBehaviours.add(currentB);
+                                    else
+                                        selectedBehaviours.remove(currentB);
+                                }
+                            });
+                            cb.setText(currentB.getDescription());
+                            cb.setId(currentB.getIdBehaviour());
                             cb.setTextColor(WifWafColor.BLACK);
                             actlayout = (LinearLayout) findViewById(R.id.layout);
-                            actlayout.addView(cb, 9);
+                            actlayout.addView(cb, 12);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -261,3 +275,4 @@ public class AddDogActivity extends AppCompatActivity {
         }
     };
 }
+

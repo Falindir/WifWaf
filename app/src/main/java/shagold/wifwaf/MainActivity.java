@@ -150,8 +150,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else{
                             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                            alertDialog.setTitle("Erreur");
-                            alertDialog.setMessage("Mauvais identifiants"); //TODO internationalisation
+                            alertDialog.setTitle(getString(R.string.error));
+                            alertDialog.setMessage(getString(R.string.bad_id_pass)); //TODO internationalisation
                             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {

@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -20,8 +19,7 @@ import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
-import shagold.wifwaf.tool.WifWafColor;
-import shagold.wifwaf.list.DogAdapter;
+import shagold.wifwaf.adapter.DogAdapter;
 
 public class UserDogsActivity extends AppCompatActivity {
 

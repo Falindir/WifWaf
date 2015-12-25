@@ -1,4 +1,4 @@
-package shagold.wifwaf.tool;
+package shagold.wifwaf.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

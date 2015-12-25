@@ -12,113 +12,168 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="shagold.wifwaf.DogProfileActivity">
+        tools:context=".DogProfileActivity">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
             android:text="@string/name"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/Title.TextView"
             android:id="@+id/namePublicDog"/>
 
         <ImageView
             android:id="@+id/avatarPublicDog"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             tools:background="#AAA" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/age" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/dogPublicProfileAge" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gender"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/genderDogPublicProfile"/>
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/breed" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileBreed" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/size" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileSize" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/getAlongWithMales" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileGetAlongWithMales" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/getAlongWithFemales" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileGetAlongWithFemales" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/getAlongWithKids" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileGetAlongWithKids" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/getAlongWithHumans" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dogPublicProfileGetAlongWithHumans" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             android:text="@string/description" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            style="@style/Title.TextView"
             android:id="@+id/dogPublicProfileDescription" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/gender"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="@style/Title.TextView"
+            android:id="@+id/genderDogPublicProfile"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/breed" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileBreed" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/size" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileSize" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/getAlongWithMales" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileGetAlongWithMales" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/getAlongWithFemales" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileGetAlongWithFemales" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/getAlongWithKids" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileGetAlongWithKids" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/getAlongWithHumans" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/dogPublicProfileGetAlongWithHumans" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/behaviour" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:id="@+id/behaviour" />
 
     </LinearLayout>
 </ScrollView>

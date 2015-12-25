@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import shagold.wifwaf.dataBase.Behaviour;
 import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.manager.MenuManager;
 
@@ -54,6 +55,13 @@ public class PublicDogProfileActivity extends AppCompatActivity {
 
         TextView GetAlongWithHumans = (TextView) findViewById(R.id.dogPublicProfileGetAlongWithHumans);
         GetAlongWithHumans.setText(dog.getGetAlongWithHumans());
+
+        TextView Behaviours = (TextView) findViewById(R.id.behaviour);
+        String listB = "";
+        for (Behaviour b : dog.getBehaviours()) {
+            listB += " " + b.getDescription();
+        }
+        Behaviours.setText(listB);
 
     }
 

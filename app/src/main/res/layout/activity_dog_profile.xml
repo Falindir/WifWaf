@@ -5,6 +5,7 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
+        android:id="@+id/layoutDogProfile"
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="fill_parent"
@@ -18,7 +19,9 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/name" />
+            android:text="@string/name"
+            android:textStyle="bold"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
@@ -30,17 +33,23 @@
             android:id="@+id/avatarDog"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             tools:background="#AAA" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/age" />
+            android:text="@string/age"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dogAgeProfileValue"
+            style="@style/Title.TextView"
             android:text="0" />
 
         <SeekBar
@@ -55,7 +64,26 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gender" />
+            android:text="@string/description"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="@string/description"
+            style="@style/Title.TextView"
+            android:id="@+id/dogProfileDescription" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gender"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <Spinner
             android:layout_width="match_parent"
@@ -66,7 +94,10 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/breed" />
+            android:text="@string/breed"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
@@ -78,12 +109,16 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/size" />
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/size"
+            style="@style/Title.TextView"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/dogSizeProfileValue"
+            style="@style/Title.TextView"
             android:text="1" />
 
         <SeekBar
@@ -96,64 +131,76 @@
             android:secondaryProgress="0" />
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/behaviour" />
+
+        <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/getAlongWithMales" />
+            android:text="@string/getAlongWithMales"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithMales"
+            style="@style/Title.TextView"
             android:id="@+id/dogProfilegetAlongWithMales" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/getAlongWithFemales" />
+            android:text="@string/getAlongWithFemales"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithFemales"
+            style="@style/Title.TextView"
             android:id="@+id/dogProfilegetAlongWithFemales" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/getAlongWithKids" />
+            android:text="@string/getAlongWithKids"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithKids"
+            style="@style/Title.TextView"
             android:id="@+id/dogProfilegetAlongWithKids" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/getAlongWithHumans" />
+            android:text="@string/getAlongWithHumans"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:hint="@string/getAlongWithHumans"
+            style="@style/Title.TextView"
             android:id="@+id/dogProfilegetAlongWithHumans" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/description" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:hint="@string/description"
-            android:id="@+id/dogProfileDescription" />
 
         <Button
             android:layout_width="match_parent"
@@ -161,6 +208,7 @@
             android:text="@string/save"
             android:id="@+id/applyChangeDogProfile"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:onClick="saveChangeDog"/>
 
     </LinearLayout>

@@ -29,8 +29,8 @@ import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.tool.WifWafColor;
-import shagold.wifwaf.tool.WifWafDatePickerFragment;
-import shagold.wifwaf.tool.WifWafTimePickerFragment;
+import shagold.wifwaf.fragment.WifWafDatePickerFragment;
+import shagold.wifwaf.fragment.WifWafTimePickerFragment;
 
 public class UseWalkActivity extends AppCompatActivity {
 

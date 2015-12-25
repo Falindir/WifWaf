@@ -17,7 +17,7 @@ public class Walk implements Serializable {
     private String walkName;
     private String description;
     private String city;
-    private String departure; //TODO Timestamp?
+    private String departure;
     private ArrayList<Location> path = new ArrayList<Location>();
     private ArrayList<Dog> dogs = new ArrayList<Dog>();
 

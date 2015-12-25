@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
@@ -43,16 +43,35 @@
             android:hint="@string/phone"
             android:id="@+id/PhoneNumber" />
 
-        <TextView
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Birthday" />
+            android:layout_centerVertical="true">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_date"
-            android:onClick="showDatePickerDialog" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/birthday"
+                style="@style/Title.TextView"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:id="@+id/Birthday"
+                style="@style/Title.TextView"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_date"
+                android:layout_alignParentRight="true"
+                android:onClick="showDatePickerDialog" />
+
+        </RelativeLayout>
 
         <EditText
             android:layout_width="fill_parent"
@@ -66,7 +85,6 @@
             android:layout_height="wrap_content"
             android:text="@string/confirm"
             android:id="@+id/Confirm"
-            android:layout_column="1"
             android:onClick="trySignUp"/>
 
     </LinearLayout>
