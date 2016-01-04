@@ -136,9 +136,8 @@ public class PublicUserProfileActivity extends AppCompatActivity {
                     TextView userProfilePhoneNumber = (TextView) findViewById(R.id.userProfilePhoneNumber);
                     userProfilePhoneNumber.setText(Html.fromHtml("<a href=tel:" + Integer.toString(user.getPhoneNumber()) + ">" + Integer.toString(user.getPhoneNumber()) + "</a>"));
 
-                    // TODO default image
                     ImageView userAvatar = (ImageView) findViewById(R.id.avatarPublicUserProfile);
-                    userAvatar.setImageResource(R.drawable.user);
+                    userAvatar.setImageBitmap(user.getPhotoBitmap());
 
                     // TODO send to public dog profile
 

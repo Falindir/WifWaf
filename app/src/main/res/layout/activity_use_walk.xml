@@ -12,14 +12,15 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="shagold.wifwaf.UseWalkActivity"
+        tools:context=".UseWalkActivity"
         android:focusableInTouchMode="true"
         android:id="@+id/useWalkLayout">
 
         <TextView
             android:text="@string/name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
@@ -31,7 +32,8 @@
         <TextView
             android:text="@string/description"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"/>
 
         <EditText
             android:layout_width="fill_parent"
@@ -40,43 +42,64 @@
             android:hint="@string/description"
             android:id="@+id/descriptionUseWalk" />
 
-        <TextView
-            android:text="@string/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:id="@+id/dateUseWalk"/>
+            android:focusableInTouchMode="true">
 
-        <Button
-            android:layout_width="wrap_content"
+            <TextView
+                android:text="@string/date"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                style="@style/Title.TextView"
+                android:focusable="true"
+                android:clickable="true"
+                android:focusableInTouchMode="true"
+                android:id="@+id/dateUseWalk"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="2"
+                android:src="@drawable/ic_date_range_black_24dp"
+                android:onClick="choseDate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:text="@string/date"
-            android:onClick="choseDate" />
+            android:focusableInTouchMode="true">
 
-        <TextView
-            android:text="@string/timeStamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/timeStamp"
+                android:layout_height="wrap_content"
+                style="@style/Title.TextView"
+                android:id="@+id/timeStampUseWalk"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_width="200dp"
+                android:focusableInTouchMode="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/timeStampUseWalk"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/timeStamp"
-            android:onClick="choseTimeStamp" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="@string/timeStamp"
+                android:src="@drawable/ic_query_builder_black_24dp"
+                android:layout_weight="2"
+                android:onClick="choseTimeStamp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_prompt_select_dogs"
-            android:id="@+id/selectDogs"/>
+            android:id="@+id/selectDogs"
+            style="@style/Title.TextView"/>
 
         <Button
             android:layout_width="match_parent"

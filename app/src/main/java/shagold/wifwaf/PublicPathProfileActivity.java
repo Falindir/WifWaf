@@ -84,27 +84,12 @@ public class PublicPathProfileActivity extends FragmentActivity implements Googl
 
         if(walk != null) {
             List<shagold.wifwaf.dataBase.Location> path = new ArrayList<shagold.wifwaf.dataBase.Location>(walk.getPath());
-
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(path.get(0).transform(), 16));
-
-            System.out.println("Path " + path.size());
-
             shagold.wifwaf.dataBase.Location start = path.get(0);
-
-            mMap.addMarker(new MarkerOptions().position(start.transform()).title("Beginning"));
-
-            /*//TODO just for test
-            if(path.size() < 2) {
-
-                path.add(new shagold.wifwaf.dataBase.Location(2, 10, 10, 2));
-                path.add(new shagold.wifwaf.dataBase.Location(3, 20, 20, 3));
-                path.add(new shagold.wifwaf.dataBase.Location(4, 30, 30, 4));
-                path.add(new shagold.wifwaf.dataBase.Location(5, 40, 40, 5));
-                path.add(new shagold.wifwaf.dataBase.Location(6, 50, 50, 6));
-
-                path.add(0, start);
-            }*/
-
+            //Ajout marker début
+            String debut = getString(R.string.beginning);
+            mMap.addMarker(new MarkerOptions().position(start.transform()).title(debut));
+            //Création ligne
             for(int i = 0; i < path.size() - 1; i++) {
                 PolylineOptions temp = new PolylineOptions()
                         .add(path.get(i).transform())
@@ -113,6 +98,12 @@ public class PublicPathProfileActivity extends FragmentActivity implements Googl
                 temp.visible(true);
                 temp.width(10);
                 mMap.addPolyline(temp);
+                if (i == path.size() - 2){
+                    //last line
+                    shagold.wifwaf.dataBase.Location end = path.get(i);
+                    String fin = getString(R.string.end);
+                    mMap.addMarker(new MarkerOptions().position(end.transform()).title(fin));
+                }
             }
         }
 

@@ -83,29 +83,28 @@
             android:id="@+id/walkPublicTimeDeparture"
             style="@style/Title.TextView"/>
 
-        <RelativeLayout
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:text="@string/seeProfile"
+            android:id="@+id/viewUserProfile"
+            android:layout_marginTop="10dp"
+            android:onClick="redirectUserProfile"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/seeProfile"
-                android:id="@+id/viewUserProfile"
-                android:layout_alignParentLeft="true"
-                android:onClick="redirectUserProfile"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/like_to_come"
+            android:id="@+id/likeToCome"
+            android:onClick="sendNotif"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/like_to_come"
-                android:id="@+id/likeToCome"
-                android:layout_alignParentRight="true"
-                android:onClick="sendNotif"/>
-
-        </RelativeLayout>
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/who_s_participating"
+            android:visibility="gone"
+            android:id="@+id/participation"
+            android:onClick="getParticipants"/>
 
         <Button
             android:layout_width="match_parent"
@@ -113,26 +112,18 @@
             android:text="@string/walkDogs"
             android:onClick="walkDogs"/>
 
-        <RelativeLayout
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/viewPath"
+            android:onClick="viewPath"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/viewPath"
-                android:layout_alignParentLeft="true"
-                android:onClick="viewPath"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/useWalk"
-                android:layout_alignParentRight="true"
-                android:id="@+id/useWalkButton"
-                android:onClick="useWalk"/>
-
-        </RelativeLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/useWalk"
+            android:id="@+id/useWalkButton"
+            android:onClick="useWalk"/>
 
     </LinearLayout>
 </ScrollView>

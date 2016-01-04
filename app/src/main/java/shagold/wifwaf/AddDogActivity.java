@@ -1,7 +1,11 @@
 package shagold.wifwaf;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -23,6 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import shagold.wifwaf.dataBase.Behaviour;
@@ -44,6 +54,13 @@ public class AddDogActivity extends AppCompatActivity {
     private Button confirmAddDog;
     private LinearLayout actlayout;
     private ArrayList<Behaviour> selectedBehaviours = new ArrayList<Behaviour>();
+    private ImageView mImageView;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int ACTION_SELECT_PICTURE = 2;
+
+    Bitmap imageBitmap;
+    String bitmapImagedata = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +74,8 @@ public class AddDogActivity extends AppCompatActivity {
         // Gestion vue + gestion activity's state
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dog);
+
+        mImageView = (ImageView) findViewById(R.id.imageviewNewDog);
 
         // Gestion gender
         Spinner Ssex = (Spinner) findViewById(R.id.gender);
@@ -105,6 +124,7 @@ public class AddDogActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
     }
 
     public void tryAddDog(View view) throws JSONException {
@@ -207,12 +227,77 @@ public class AddDogActivity extends AppCompatActivity {
         String Sdescription = ETDescription.getText().toString();
 
         //Test ajout d'un chien
-        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours);
+        Dog dog = new Dog(mUser.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours, bitmapImagedata);
         JSONObject jsonDog = dog.toJson();
         System.out.println("TryAddDog" + jsonDog);
         mSocket.emit("TryAddDog", jsonDog);
     }
 
+    public void takePic(View view){
+        dispatchTakePictureIntent();
+    }
+
+    public void selectPic(View view){
+        //Préparation du bouton d'exploration de fichiers
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        String title = getString(R.string.select_picture_from_explorer);
+        startActivityForResult(Intent.createChooser(intent,
+                title), ACTION_SELECT_PICTURE);
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            mImageView.setImageBitmap(imageBitmap);
+            preparePhoto();
+        }
+
+        if (requestCode == ACTION_SELECT_PICTURE && resultCode == RESULT_OK) {
+            getFileFromPath(data);
+        }
+    }
+
+    public void getFileFromPath(final Intent data) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Uri selectedImageUri = data.getData();
+                BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+
+                InputStream stream = null;
+                try {
+                    stream = getContentResolver().openInputStream(selectedImageUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap myImage = BitmapFactory.decodeStream(stream, null, bfOptions);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                myImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                myImage = Bitmap.createScaledBitmap(myImage, 204, 153, false);
+                bitmapImagedata = Dog.encodeTobase64(myImage);
+
+                mImageView.setImageBitmap(myImage);
+            }
+        });
+    }
+
+    public void preparePhoto(){
+        BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+        bfOptions.inTempStorage = new byte[32 * 1024];
+
+        // On convertit l'image en tableau de BYTE
+        bitmapImagedata = Dog.encodeTobase64(imageBitmap);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

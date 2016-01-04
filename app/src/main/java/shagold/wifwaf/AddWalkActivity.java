@@ -29,20 +29,21 @@ import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.tool.WifWafColor;
 import shagold.wifwaf.fragment.WifWafDatePickerFragment;
 import shagold.wifwaf.fragment.WifWafTimePickerFragment;
+import shagold.wifwaf.view.ErrorMessage;
 import shagold.wifwaf.view.TextValidator;
 import shagold.wifwaf.view.ValidateMessage;
 import shagold.wifwaf.view.filter.text.EditTextFilter;
 import shagold.wifwaf.view.filter.text.NumberFilter;
 import shagold.wifwaf.view.filter.text.SizeFilter;
+import shagold.wifwaf.view.filter.textview.PersonalizedBlankFilter;
+import shagold.wifwaf.view.filter.textview.TextViewFilter;
 
 public class AddWalkActivity extends AppCompatActivity {
 
+    private Socket mSocket;
     private User mUser;
     private ArrayList<Dog> dogChoice = new ArrayList<Dog>();
     private List<Dog> userDogs = new ArrayList<Dog>();
-    private TextValidator textValidator = new TextValidator();
-    private EditTextFilter[] filters = {new NumberFilter()};
-    private SizeFilter sizeDescriptionFilter = new SizeFilter();
     private Context context;
 
     @Override
@@ -51,7 +52,7 @@ public class AddWalkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_walk);
 
         //gestion de sockets
-        Socket mSocket = SocketManager.getMySocket();
+        mSocket = SocketManager.getMySocket();
         mUser = SocketManager.getMyUser();
         mSocket.on("RGetAllMyDogs", onRGetAllMyDogs);
         mSocket.emit("getAllMyDogs", mUser.getIdUser());
@@ -62,7 +63,7 @@ public class AddWalkActivity extends AppCompatActivity {
     
     public void choseTimeStamp(View view) {
         WifWafTimePickerFragment newFragment = new WifWafTimePickerFragment();
-        TextView textView = (TextView) findViewById(R.id.timeStampAddWalk);
+        TextView textView = (TextView) findViewById(R.id.timeStampAddWalkMaster);
         newFragment.setTimeText(textView);
         newFragment.show(getSupportFragmentManager(), "timePicker");
     }
@@ -70,6 +71,7 @@ public class AddWalkActivity extends AppCompatActivity {
     private Emitter.Listener onRGetAllMyDogs = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
+            mSocket.off("RGetAllMyDogs");
             AddWalkActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -126,75 +128,106 @@ public class AddWalkActivity extends AppCompatActivity {
 
     public void choseDate(View view) {
         WifWafDatePickerFragment newFragment = new WifWafDatePickerFragment();
-        TextView textView = (TextView) findViewById(R.id.dateAddWalk);
+        TextView textView = (TextView) findViewById(R.id.dateAddWalkMaster);
         newFragment.setDateText(textView);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void drawingWalk(View view) {
-
-        Intent drawingWalk = new Intent(AddWalkActivity.this, DrawingWalkActivity.class);
-
+    private Walk getWalk() {
         EditText nameWalk = (EditText) findViewById(R.id.nameWalk);
         String nameW = nameWalk.getText().toString();
         EditText descriptionWalk = (EditText) findViewById(R.id.descriptionWalk);
         String descriptionW = descriptionWalk.getText().toString();
-        TextView timeText = (TextView) findViewById(R.id.timeStampAddWalk);
+        TextView timeText = (TextView) findViewById(R.id.timeStampAddWalkMaster);
         String time = timeText.getText().toString();
-        TextView dateText = (TextView) findViewById(R.id.dateAddWalk);
+        TextView dateText = (TextView) findViewById(R.id.dateAddWalkMaster);
         String date = dateText.getText().toString();
         String departure = date + " " + time;
 
-        Walk walk = new Walk(mUser.getIdUser(), nameW, descriptionW, "null", departure, dogChoice);
-        drawingWalk.putExtra("WALK", walk);
-        startActivity(drawingWalk);
+        return new Walk(mUser.getIdUser(), nameW, descriptionW, "null", departure, dogChoice);
+    }
+
+    private boolean filter() {
+
+        TextValidator textValidator = new TextValidator();
+
+        SizeFilter sizeFilter = new SizeFilter();
+
+        TextViewFilter filterDate = new PersonalizedBlankFilter(ErrorMessage.DATE);
+        TextViewFilter filterTime = new PersonalizedBlankFilter(ErrorMessage.TIME);
+
+        EditText nameWalk = (EditText) findViewById(R.id.nameWalk);
+        EditText descriptionWalk = (EditText) findViewById(R.id.descriptionWalk);
+
+        TextView dateText = (TextView) findViewById(R.id.dateAddWalkMaster);
+        TextView timeText = (TextView) findViewById(R.id.timeStampAddWalkMaster);
+        TextView date = (TextView) findViewById(R.id.dateAddWalkMaster);
+        TextView time = (TextView) findViewById(R.id.timeStampAddWalkMaster);
+        TextView dogs = (TextView) findViewById(R.id.selectDogs);
+
+        boolean result = true;
+
+        ValidateMessage vm = textValidator.validate(nameWalk, sizeFilter);
+        if (!vm.getValue()) {
+            int min = sizeFilter.getMin();
+            int max = sizeFilter.getMax();
+            nameWalk.setError(vm.getError().toString() + " min: " + min + " max: " + max);
+            result = false;
+        }
+
+        vm = textValidator.validate(descriptionWalk, sizeFilter);
+        if (!vm.getValue()) {
+            int min = sizeFilter.getMin();
+            int max = sizeFilter.getMax();
+            descriptionWalk.setError(vm.getError().toString() + " min: " + min + " max: " + max);
+            result =  false;
+        }
+
+        /*vm = textValidator.validate(dateText, filterDate);
+        if(!vm.getValue()) {
+            date.setError(vm.getError().toString());
+            result =  false;
+        }
+        else {
+            date.setError(null);
+        }*/
+
+        /*vm = textValidator.validate(timeText, filterTime);
+        if(!vm.getValue()) {
+            time.setError(vm.getError().toString());
+            result =  false;
+        }
+        else {
+            time.setError(null);
+        }*/
+
+        if (dogChoice.size() == 0) {
+            dogs.setError(getString(R.string.not_enough_dogs));
+            result =  false;
+        }
+        else {
+            dogs.setError(null);
+        }
+
+        return result;
+    }
+
+    private void nextScreen(Intent i){
+        if(!filter())
+            return;
+
+        Walk walk = getWalk();
+        i.putExtra("WALK", walk);
+        startActivity(i);
+    }
+
+    public void drawingWalk(View view) {
+        Intent drawingWalk = new Intent(AddWalkActivity.this, DrawingWalkActivity.class);
+        nextScreen(drawingWalk);
     }
 
     public void walkingWalk(View view) {
-        final EditText nameWalk = (EditText) findViewById(R.id.nameWalk);
-        final EditText descriptionWalk = (EditText) findViewById(R.id.descriptionWalk);
-
-        boolean validText = true;
-
-        ValidateMessage vm = textValidator.validate(nameWalk, filters);
-        if (!vm.getValue()) {
-            validText = vm.getValue();
-            nameWalk.setError(vm.getError().toString());
-        }
-/*
-        vm = textValidator.validate(nameWalk, sizeTitleFilter);
-        if(!vm.getValue()) {
-                    validText = vm.getValue();
-                    nameWalk.setError(vm.getError().toString() + " : min - " + sizeTitleFilter.getMin() + " , max - " + sizeTitleFilter.getMax());
-                }*/
-
-        vm = textValidator.validate(descriptionWalk, filters);
-        if (!vm.getValue()) {
-            validText = vm.getValue();
-            descriptionWalk.setError(vm.getError().toString());
-        }
-
-        vm = textValidator.validate(descriptionWalk, sizeDescriptionFilter);
-        if (!vm.getValue()) {
-            validText = vm.getValue();
-            descriptionWalk.setError(vm.getError().toString() + " : min " + sizeDescriptionFilter.getMin() + " , max " + sizeDescriptionFilter.getMax());
-        }
-
-        final Intent actGPSWalk = new Intent(getApplicationContext(), GPSWalkActivity.class);
-        if (dogChoice.size() > 0) {
-            if (validText) {
-                Walk walk = new Walk(mUser.getIdUser(), nameWalk.getText().toString(), descriptionWalk.getText().toString(), "null", "", dogChoice);
-                TextView timeText = (TextView) findViewById(R.id.timeStampAddWalk);
-                String time = timeText.getText().toString();
-                TextView dateText = (TextView) findViewById(R.id.dateAddWalk);
-                String date = dateText.getText().toString();
-                walk.setDeparture(date + " " + time);
-                actGPSWalk.putExtra("WALK", walk);
-                startActivity(actGPSWalk);
-            }
-        } else {
-            TextView dogs = (TextView) findViewById(R.id.selectDogs);
-            dogs.setError(getString(R.string.not_enough_dogs));
-        }
+        Intent actGPSWalk = new Intent(getApplicationContext(), GPSWalkActivity.class);
+        nextScreen(actGPSWalk);
     }
 }

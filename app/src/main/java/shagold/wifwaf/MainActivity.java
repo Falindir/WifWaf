@@ -3,6 +3,7 @@ package shagold.wifwaf;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
@@ -55,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         mSocket = SocketManager.getMySocket();
         mSocket.connect();
         mSocket.on("RTrySignIn", onRTrySignIn);
+
+        //Police perso sur le titre
+        TextView text = (TextView) findViewById(R.id.titreappli);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/JennaSue.ttf");
+        text.setTypeface(tf);
     }
 
     @Override
@@ -144,6 +151,11 @@ public class MainActivity extends AppCompatActivity {
                         if(realpass.equals(typedpassencrypt) && id != -1){
                             User newUser = new User(param);
                             SocketManager.setMyUser(newUser);
+
+                            //Création/enregistrement token
+                            Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
+                            startService(intent);
+
                             Intent resultat = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(resultat);
                             finish();
@@ -151,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         else{
                             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                             alertDialog.setTitle(getString(R.string.error));
-                            alertDialog.setMessage(getString(R.string.bad_id_pass)); //TODO internationalisation
+                            alertDialog.setMessage(getString(R.string.bad_id_pass));
                             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {

@@ -106,9 +106,9 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
                     LatLng pos = new LatLng(loc.getLatitude(), loc.getLongitude());
 
                     //Gestion marker point de départ
-                    myLocation = mMap.addMarker(new MarkerOptions().position(pos).title("Starting point"));
+                    myLocation = mMap.addMarker(new MarkerOptions().position(pos).title(getString(R.string.starting_point)));
                     //Gestion toast sélection de pts
-                    CharSequence text = "Please add points to create your walk";
+                    CharSequence text = getString(R.string.add_point);
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -130,7 +130,8 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
                     pl.add(temp);
                     mMap.addPolyline(temp);
                     LatLng last = linesLatLng.get(linesLatLng.size() -1);
-                    lastAddedM = mMap.addMarker(new MarkerOptions().position(last).title("End"));
+                    String nameM = getString(R.string.end);
+                    lastAddedM = mMap.addMarker(new MarkerOptions().position(last).title(nameM));
                 }
             }
         });
@@ -168,14 +169,16 @@ public class DrawingWalkActivity extends FragmentActivity implements GoogleApiCl
 
         //Ajout marqueur avec position courante
         LatLng mapos = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-        myLocation = mMap.addMarker(new MarkerOptions().position(mapos).title("My position"));
+        String maposN = getString(R.string.my_position);
+        myLocation = mMap.addMarker(new MarkerOptions().position(mapos).title(maposN));
 
         //On se centre sur la position courante
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mapos, 16));
 
         //Affichage 1er toast d'instructions
         context = getApplicationContext();
-        CharSequence text = "Please select where your walk should start";
+        String firstInstructionDrawWalk = getString(R.string.first_instruction_draw);
+        CharSequence text = firstInstructionDrawWalk;
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);

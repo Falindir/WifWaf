@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import shagold.wifwaf.R;
 import shagold.wifwaf.UseWalkActivity;
+import shagold.wifwaf.WalkProfileActivity;
 import shagold.wifwaf.dataBase.Walk;
 
 public class WifWafWalkChangeFragment extends DialogFragment {
@@ -30,6 +31,7 @@ public class WifWafWalkChangeFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
 
                         // TODO Save walk first
+                        // Il faut appeler saveChangeWalk contenu dans WalkProfileActivity
 
                         Intent result = new Intent(getContext(), UseWalkActivity.class);
                         result.putExtra("WALK", walk);

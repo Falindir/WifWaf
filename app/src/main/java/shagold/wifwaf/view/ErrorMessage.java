@@ -28,5 +28,19 @@ public enum ErrorMessage {
         public String toString() {
             return "Wrong email typo";
         }
+    },
+
+    DATE {
+        @Override
+        public String toString() {
+            return "Required date";
+        }
+    },
+
+    TIME {
+        @Override
+        public String toString() {
+            return "Required time";
+        }
     }
 }

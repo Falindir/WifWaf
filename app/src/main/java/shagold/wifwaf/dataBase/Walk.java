@@ -99,6 +99,28 @@ public class Walk implements Serializable {
         return walkJson;
     }
 
+    public JSONObject toJsonWithId() throws JSONException {
+        JSONObject walkJson = new JSONObject();
+        walkJson.put("idWalk", this.idWalk);
+        walkJson.put("idUser", this.idUser);
+        walkJson.put("walkName", this.walkName);
+        walkJson.put("description", this.description);
+        walkJson.put("city", this.city);
+        walkJson.put("departure", this.departure);
+        JSONArray mylocations = new JSONArray();
+        for (Location l : path){
+            mylocations.put(l.toJson());
+        }
+        walkJson.put("location", mylocations);
+        JSONArray mydogs = new JSONArray();
+        for (Dog d : dogs){
+            mydogs.put(d.toJsonWithId());
+        }
+        walkJson.put("dogs", mydogs);
+        System.out.println("Résultat" + walkJson);
+        return walkJson;
+    }
+
     public int getIdWalk() {
         return idWalk;
     }
@@ -157,5 +179,46 @@ public class Walk implements Serializable {
             }
         }
         return walks;
+    }
+
+    public boolean equals(Walk other){
+        if(!this.getTitle().equals(other.getTitle()))
+            return false;
+
+        if(!this.getDescription().equals(other.getDescription()))
+            return false;
+
+        if(!this.getCity().equals(other.getCity()))
+            return false;
+
+        if(!this.getDeparture().equals(other.getDeparture()))
+            return false;
+
+        if(this.getDogs().size() != other.getDogs().size())
+            return false;
+
+        List<Integer> dogWalkID = new ArrayList<>();
+        for(Dog dog : this.getDogs()) {
+            dogWalkID.add(dog.getIdDog());
+        }
+
+        List<Integer> dogOtherID = new ArrayList<>();
+        for(Dog dog : other.getDogs()) {
+            dogOtherID.add(dog.getIdDog());
+        }
+
+        for(Integer id : dogWalkID) {
+            if(!dogOtherID.contains(id)) {
+                return false;
+            }
+        }
+
+        for(Integer id : dogOtherID) {
+            if(!dogWalkID.contains(id)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

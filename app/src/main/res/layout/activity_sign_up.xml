@@ -43,35 +43,30 @@
             android:hint="@string/phone"
             android:id="@+id/PhoneNumber" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
+            tools:context=".SignUpActivity"
+            android:focusableInTouchMode="true">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/BirthdayMaster"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:text="@string/birthday"
-                style="@style/Title.TextView"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:inputType="date"
+                android:text="@string/select_date"
+                style="@style/Title.TextView" >
+            </TextView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:id="@+id/Birthday"
-                style="@style/Title.TextView"/>
-
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_date"
-                android:layout_alignParentRight="true"
-                android:onClick="showDatePickerDialog" />
-
-        </RelativeLayout>
+                android:text="@string/select_birthday"
+                android:layout_marginLeft="20dp"
+                android:onClick="showDatePickerDialog"
+                android:src="@drawable/ic_date_range_black_24dp"/>
+        </LinearLayout>
 
         <EditText
             android:layout_width="fill_parent"
@@ -79,6 +74,25 @@
             android:inputType="textMultiLine"
             android:hint="@string/description"
             android:id="@+id/Description" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageviewSignUp"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/take_picture"
+            android:id="@+id/selectImage"
+            android:onClick="takePic"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_picture_from_explorer"
+            android:id="@+id/selectPic_SU"
+            android:onClick="selectPic"/>
 
         <Button
             android:layout_width="fill_parent"

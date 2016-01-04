@@ -47,7 +47,7 @@ public class DogPublicAdapter extends ArrayAdapter<Dog> {
         final Dog dog = getItem(position);
         viewHolder.getName().setText(dog.getName());
         viewHolder.getDescription().setText(dog.getDescription());
-        viewHolder.getAvatar().setImageResource(viewHolder.getDefaultAvatar());
+        viewHolder.getAvatar().setImageBitmap(dog.getPhotoBitmap());
         if(dog.isMale())
             viewHolder.getGender().setText(getContext().getString(R.string.male));
         else

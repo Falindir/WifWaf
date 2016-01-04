@@ -1,22 +1,33 @@
 package shagold.wifwaf;
 
 import android.app.AlertDialog;
-
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import com.github.nkzawa.socketio.client.Socket;
 import com.github.nkzawa.emitter.Emitter;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import shagold.wifwaf.dataBase.Dog;
 import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
@@ -28,11 +39,19 @@ import shagold.wifwaf.view.filter.text.EditTextFilter;
 import shagold.wifwaf.view.filter.text.EmailFilter;
 import shagold.wifwaf.view.filter.text.NumberFilter;
 import shagold.wifwaf.view.filter.text.SizeFilter;
+import shagold.wifwaf.view.filter.textview.PersonalizedBlankFilter;
+import shagold.wifwaf.view.filter.textview.TextViewFilter;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private Socket mSocket;
     private User mUser;
+    private ImageView mImageView;
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int ACTION_SELECT_PICTURE = 2;
+    Bitmap imageBitmap;
+    String bitmapImagedata = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +61,9 @@ public class SignUpActivity extends AppCompatActivity {
         //Ecoute evenement
         mSocket = SocketManager.getMySocket();
         mSocket.on("RTrySignUp", onRTrySignUp);
+
+        mImageView = (ImageView) findViewById(R.id.imageviewSignUp);
+
     }
 
     @Override
@@ -62,9 +84,74 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void showDatePickerDialog(View v) {
         WifWafDatePickerFragment newFragment = new WifWafDatePickerFragment();
-        TextView ETBirthday = (TextView) findViewById(R.id.Birthday);
+        TextView ETBirthday = (TextView) findViewById(R.id.BirthdayMaster);
         newFragment.setDateText(ETBirthday);
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void selectPic(View view){
+        //Préparation du bouton d'exploration de fichiers
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        String title = getString(R.string.select_picture_from_explorer);
+        startActivityForResult(Intent.createChooser(intent,
+                title), ACTION_SELECT_PICTURE);
+    }
+
+    public void takePic(View view){
+        dispatchTakePictureIntent();
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            mImageView.setImageBitmap(imageBitmap);
+            preparePhoto();
+        }
+        if (requestCode == ACTION_SELECT_PICTURE && resultCode == RESULT_OK) {
+            getFileFromPath(data);
+        }
+    }
+
+    public void getFileFromPath(final Intent data) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Uri selectedImageUri = data.getData();
+                BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+
+                InputStream stream = null;
+                try {
+                    stream = getContentResolver().openInputStream(selectedImageUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap myImage = BitmapFactory.decodeStream(stream, null, bfOptions);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                myImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                myImage = Bitmap.createScaledBitmap(myImage, 204, 153, false);
+                bitmapImagedata = Dog.encodeTobase64(myImage);
+
+                mImageView.setImageBitmap(myImage);
+            }
+        });
+    }
+
+    public void preparePhoto(){
+        BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+        bfOptions.inTempStorage = new byte[32 * 1024];
+
+        // On convertit l'image en tableau de BYTE
+        bitmapImagedata = Dog.encodeTobase64(imageBitmap);
     }
 
     public void trySignUp(View view) throws JSONException {
@@ -72,13 +159,14 @@ public class SignUpActivity extends AppCompatActivity {
         EditTextFilter[] filterNumber = {new SizeFilter(0,9), new NumberFilter()}; //pour le champ numéro de téléphone
         EditTextFilter[] filterSize = {new SizeFilter()}; // pour les champs texte classiques
         EditTextFilter[] filterEmail = {new SizeFilter(), new EmailFilter()};
+        TextViewFilter filterDate = new PersonalizedBlankFilter(ErrorMessage.DATE);
 
         // Récupération des valeurs
         EditText ETnickname = (EditText) findViewById(R.id.Nickname);
         EditText ETpassword = (EditText) findViewById(R.id.Password);
         EditText ETemail = (EditText) findViewById(R.id.Email);
         EditText ETPhoneNumber = (EditText) findViewById(R.id.PhoneNumber);
-        TextView ETBirthday = (TextView) findViewById(R.id.Birthday);
+        TextView ETBirthday = (TextView) findViewById(R.id.BirthdayMaster);
         ETBirthday.setFocusable(false);
         EditText ETDescription = (EditText) findViewById(R.id.Description);
 
@@ -140,6 +228,16 @@ public class SignUpActivity extends AppCompatActivity {
             ETDescription.setError(vmDescrip.getError().toString() + " min: " + min + " max: " + max);
         }
 
+        /*ValidateMessage vmBirthday = textValidator.validate(ETBirthday, filterDate);
+        TextView birthday = (TextView) findViewById(R.id.BirthdayMaster);
+        if(!vmBirthday.getValue()) {
+            valid = false;
+            birthday.setError(vmBirthday.getError().toString());
+        }
+        else {
+            birthday.setError(null);
+        }*/
+
         if (!valid){
             return;
         }
@@ -156,7 +254,7 @@ public class SignUpActivity extends AppCompatActivity {
         Spassword = User.encryptPassword(Spassword);
 
         //Test inscription
-        User user = new User(Semail,Snickname,Spassword,Sbirthday,SphoneNumber,Sdescription,"");
+        User user = new User(Semail,Snickname,Spassword,Sbirthday,SphoneNumber,Sdescription,bitmapImagedata);
         JSONObject jsonUser = user.toJson();
         mSocket.emit("TrySignUp", jsonUser);
     }
@@ -251,6 +349,11 @@ public class SignUpActivity extends AppCompatActivity {
                             Intent resultat = new Intent(SignUpActivity.this, HomeActivity.class);
                             System.out.println("[Réussite inscription]"+param);
                             SocketManager.setMyUser(mUser);
+
+                            //Création/enregistrement token
+                            Intent intent = new Intent(getApplicationContext(), RegistrationIntentService.class);
+                            startService(intent);
+
                             startActivity(resultat);
                             finish();
                         }

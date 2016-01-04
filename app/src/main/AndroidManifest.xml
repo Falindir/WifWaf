@@ -7,6 +7,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <!--Gestion push notifications-->
+    <permission android:name="shagold.wifwaf.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="shagold.wifwaf.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -96,6 +103,27 @@
         <service
             android:name=".AddressLocationService"
             android:exported="false"/>
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".WifWafGCMListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".RegistrationIntentService"
+            android:exported="false" />
         <activity
             android:name=".PublicPathProfileActivity"
             android:label="@string/title_activity_gps_walk"

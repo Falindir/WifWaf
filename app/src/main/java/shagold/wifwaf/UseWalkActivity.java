@@ -70,9 +70,10 @@ public class UseWalkActivity extends AppCompatActivity {
             UseWalkActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    mSocket.off("RGetAllMyDogs");
                     JSONArray dogsJSON = (JSONArray) args[0];
                     List<Dog> userDogs = Dog.generateDogsFromJson(dogsJSON);
-                    int index = 11;
+                    int index = 7;
                     for (Dog dog : userDogs) {
                         CheckBox cb = new CheckBox(UseWalkActivity.this);
                         cb.setText(dog.getName());

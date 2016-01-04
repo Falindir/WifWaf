@@ -1,7 +1,11 @@
 package shagold.wifwaf;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -43,6 +50,13 @@ public class DogProfileActivity extends AppCompatActivity {
     private ArrayList<Behaviour> selectedBehaviours = new ArrayList<Behaviour>();
     private Socket mSocket;
     private LinearLayout actlayout;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int ACTION_SELECT_PICTURE = 2;
+
+    ImageView mImageView;
+    Bitmap imageBitmap;
+    String bitmapImagedata = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +79,14 @@ public class DogProfileActivity extends AppCompatActivity {
                 R.array.gender_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Ssex.setAdapter(adapter);
+
+        if(dog.isMale())
+            Ssex.setSelection(adapter.getPosition("Male"));
+        else
+            Ssex.setSelection(adapter.getPosition("Female"));
+
+        // Gestion photo
+        mImageView = (ImageView) findViewById(R.id.avatarDog);
     }
 
     @Override
@@ -82,10 +104,9 @@ public class DogProfileActivity extends AppCompatActivity {
         EditText dogName = (EditText) findViewById(R.id.dogProfileName);
         dogName.setText(dog.getName());
 
-        // TODO default image
-
         ImageView dogProfile = (ImageView) findViewById(R.id.avatarDog);
-        dogProfile.setImageResource(R.drawable.dogi2);
+        dogProfile.setImageBitmap(dog.getPhotoBitmap());
+        bitmapImagedata = dog.getPhoto();
 
         EditText dogDescription = (EditText) findViewById(R.id.dogProfileDescription);
         dogDescription.setText(dog.getDescription());
@@ -244,10 +265,76 @@ public class DogProfileActivity extends AppCompatActivity {
         String Sdescription = ETDescription.getText().toString();
 
         //Update d'un chien
-        Dog updatedDog = new Dog(dog.getIdDog(), dog.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours);
+        Dog updatedDog = new Dog(dog.getIdDog(), dog.getIdUser(), Sname, age, Sbreed, size, Sgetalongwithmales, Sgetalongwithfemales, Sgetalongwithkids, Sgetalongwithhumans, Sdescription, sGender, selectedBehaviours, bitmapImagedata);
         JSONObject jsonDog = updatedDog.toJsonWithId();
         mSocket.emit("updateDog", jsonDog);
         System.out.println("jsondog" + jsonDog);
+    }
+
+    public void takePic(View view){
+        dispatchTakePictureIntent();
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    public void selectPic(View view){
+        //Préparation du bouton d'exploration de fichiers
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        String title = getString(R.string.select_picture_from_explorer);
+        startActivityForResult(Intent.createChooser(intent,
+                title), ACTION_SELECT_PICTURE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            mImageView = (ImageView) findViewById(R.id.avatarDog);
+            mImageView.setImageBitmap(imageBitmap);
+            preparePhoto();
+        }
+        if (requestCode == ACTION_SELECT_PICTURE && resultCode == RESULT_OK) {
+            getFileFromPath(data);
+        }
+    }
+
+    public void getFileFromPath(final Intent data) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Uri selectedImageUri = data.getData();
+                BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+
+                InputStream stream = null;
+                try {
+                    stream = getContentResolver().openInputStream(selectedImageUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap myImage = BitmapFactory.decodeStream(stream, null, bfOptions);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                myImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                myImage = Bitmap.createScaledBitmap(myImage, 204, 153, false);
+                bitmapImagedata = Dog.encodeTobase64(myImage);
+
+                mImageView.setImageBitmap(myImage);
+            }
+        });
+    }
+
+    public void preparePhoto(){
+        BitmapFactory.Options bfOptions = new BitmapFactory.Options();
+        bfOptions.inTempStorage = new byte[32 * 1024];
+
+        // On convertit l'image en tableau de BYTE
+        bitmapImagedata = Dog.encodeTobase64(imageBitmap);
     }
 
     private Emitter.Listener onRGetAllBehaviours = new Emitter.Listener() {

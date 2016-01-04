@@ -15,58 +15,65 @@
         tools:context=".UserProfileActivity"
         android:focusableInTouchMode="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Title.TextView"
-        android:textStyle="bold"
-        android:text="@string/name"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:text="@string/name"/>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/userProfileName" />
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userProfileName" />
 
-    <ImageView
-        android:id="@+id/avatarUserProfile"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        tools:background="#AAA"/>
+        <ImageView
+            android:id="@+id/avatarUserProfile"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            tools:background="#AAA"/>
 
-     <TextView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         style="@style/Title.TextView"
-         android:textStyle="bold"
-         android:layout_marginTop="10dp"
-         android:text="@string/email"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_picture_take"
+            android:id="@+id/selectImage"
+            android:onClick="takePic"/>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/userProfileMail" />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_picture_gallery"
+            android:id="@+id/selectPic_UP"
+            android:onClick="selectPic"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             style="@style/Title.TextView"
+             android:textStyle="bold"
+             android:layout_marginTop="10dp"
+             android:text="@string/email"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userProfileMail" />
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Title.TextView"
             android:textStyle="bold"
-            android:text="@string/birthday"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_marginTop="10dp"
+            android:text="@string/birthday"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             style="@style/Title.TextView"
             android:id="@+id/userProfileBirthday" />
 
@@ -74,44 +81,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/modify_date"
-            android:layout_alignParentRight="true"
             android:onClick="showDatePickerBirthdayDialog" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/phone"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Title.TextView"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:text="@string/phone"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userProfilePhoneNumber" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/userProfilePhoneNumber" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Title.TextView"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/description"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Title.TextView"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
-        android:text="@string/description"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/userProfileDescription" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/userProfileDescription" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/applyChangeUserProfile"
-        android:layout_gravity="center_horizontal"
-        android:onClick="saveProfileUser"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/applyChangeUserProfile"
+            android:layout_gravity="center_horizontal"
+            android:onClick="saveProfileUser"/>
 
     </LinearLayout>
 

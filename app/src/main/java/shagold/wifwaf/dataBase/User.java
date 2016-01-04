@@ -1,8 +1,13 @@
 package shagold.wifwaf.dataBase;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -162,6 +167,27 @@ public class User {
             md5 = "0"+md5;
         }
         return md5;
+    }
+
+    public static Bitmap decodeBase64(String input)
+    {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+    public static String encodeTobase64(Bitmap image)
+    {
+        Bitmap monImg = image;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        monImg.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+        return imageEncoded;
+    }
+
+    public Bitmap getPhotoBitmap() {
+        return decodeBase64(this.photo);
     }
 
 }

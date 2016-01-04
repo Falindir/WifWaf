@@ -13,18 +13,19 @@ import shagold.wifwaf.UserWalksActivity;
 public class MenuManager {
 
     public static boolean emptyMenu(MenuItem item) {
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case R.id.action_settings :
                 return true;
             default:
                 return false;
-        }
+        }*/
+        return true;
     }
 
     public static boolean defaultMenu(Activity a, MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings :
-                return true;
+            //case R.id.action_settings :
+              //  return true;
             case R.id.action_home :
                 final Intent home = new Intent(a.getApplicationContext(), HomeActivity.class);
                 a.startActivity(home);
