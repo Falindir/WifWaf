@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
         android:text="Finish"
+        android:drawableLeft="@drawable/ic_save_black_24dp"
         android:padding="10dp"
         android:layout_marginTop="10dp"
         android:paddingRight="10dp"

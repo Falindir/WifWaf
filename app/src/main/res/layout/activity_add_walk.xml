@@ -100,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/TraceByWalking"
+            android:drawableLeft="@drawable/ic_directions_run_black_24dp"
             android:id="@+id/addWalkWalkingButton"
             android:layout_gravity="center_horizontal"
             android:onClick="walkingWalk"
@@ -109,11 +110,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/TraceByDrawing"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
             android:id="@+id/addWalkDrawingButton"
             android:layout_gravity="center_horizontal"
             android:onClick="drawingWalk"
             android:layout_marginTop="10dp"/>
-
-
     </LinearLayout>
 </ScrollView>

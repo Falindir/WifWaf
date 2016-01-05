@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_walk"
+        android:drawableLeft="@drawable/ic_add_circle_black_24dp"
         android:id="@+id/addNewWalkButton"
         android:layout_gravity="right"
         android:onClick="newWalk"/>

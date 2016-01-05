@@ -3,6 +3,7 @@ package shagold.wifwaf;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -60,6 +61,34 @@ public class WalkProfileActivity extends AppCompatActivity {
 
         walk = (Walk) getIntent().getSerializableExtra("WALK");
 
+        //Préparation du formulaire
+        initFields();
+        style();
+
+        mSocket = SocketManager.getMySocket();
+        mUser = SocketManager.getMyUser();
+
+        //récupération des infos pour chaque chien de la balade
+        for(Dog d : walk.getDogs()) {
+            mSocket.emit("getDogById", d.getIdDog());
+        }
+
+        mSocket.on("RGetDogById", onRGetDogById);
+        mSocket.on("RdeleteWalk", onRredirect);
+        mSocket.on("RGetAllMyDogs", onRGetAllMyDogs);
+
+        // redirection en cas de suppression ou de màj
+        mSocket.on("RdeleteWalk", onRredirect);
+        mSocket.on("RUpdateWalk", onRredirect);
+
+        // récupération de tous les chiens du user pour la gestion de la demande de participation
+        mSocket.emit("getAllMyDogs", mUser.getIdUser());
+        mSocket.emit("getAllParticipationsForIdWalk", walk.getIdWalk());
+        mSocket.on("RgetAllParticipationsForIdWalk", onRGetParticipants);
+
+    }
+
+    public void initFields(){
         EditText walkTitle = (EditText) findViewById(R.id.walkTitle);
         walkTitle.setText(walk.getTitle());
 
@@ -76,24 +105,50 @@ public class WalkProfileActivity extends AppCompatActivity {
 
         TextView timeDepartureWalk = (TextView) findViewById(R.id.walkTimeDeparture);
         timeDepartureWalk.setText(departure.getFormattedTime());
+    }
 
-        mSocket = SocketManager.getMySocket();
-        mUser = SocketManager.getMyUser();
+    public void style(){
 
-        for(Dog d : walk.getDogs()) {
-            mSocket.emit("getDogById", d.getIdDog());
-        }
+        //Récupération typeface
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/coolvetica rg.ttf");
 
-        mSocket.on("RGetDogById", onRGetDogById);
-        mSocket.on("RdeleteWalk", onRredirect);
-        mSocket.on("RGetAllMyDogs", onRGetAllMyDogs);
-        // redirection en cas de suppression ou de màj
-        mSocket.on("RdeleteWalk", onRredirect);
-        mSocket.on("RUpdateWalk", onRredirect);
-        mSocket.emit("getAllMyDogs", mUser.getIdUser());
-        mSocket.emit("getAllParticipationsForIdWalk", walk.getIdWalk());
-        mSocket.on("RgetAllParticipationsForIdWalk", onRGetParticipants);
+        //Récupération TextView
+        TextView tvCity = (TextView) findViewById(R.id.walkProfileCityTV);
+        TextView tvDesc = (TextView) findViewById(R.id.walkProfileDescTV);
+        TextView tvTitle = (TextView) findViewById(R.id.walkProfileTitleTV);
+        TextView tvwalkDate = (TextView) findViewById(R.id.walkDateDepartureMaster);
+        TextView tvwalkTime = (TextView) findViewById(R.id.walkTimeDepartureMaster);
+        TextView tvselectP = (TextView) findViewById(R.id.walkSelectParticipants);
+        TextView tvselectD = (TextView) findViewById(R.id.walkSelectDogs);
 
+        //On ajoute le style à tous les textview
+        tvselectD.setTypeface(tf);
+        tvselectD.setTextSize(24.0f);
+        tvselectD.setTextColor(WifWafColor.BROWN);
+
+        tvselectP.setTypeface(tf);
+        tvselectP.setTextSize(24.0f);
+        tvselectP.setTextColor(WifWafColor.BROWN);
+
+        tvTitle.setTypeface(tf);
+        tvTitle.setTextSize(24.0f);
+        tvTitle.setTextColor(WifWafColor.BROWN);
+
+        tvDesc.setTypeface(tf);
+        tvDesc.setTextSize(24.0f);
+        tvDesc.setTextColor(WifWafColor.BROWN);
+
+        tvCity.setTypeface(tf);
+        tvCity.setTextSize(24.0f);
+        tvCity.setTextColor(WifWafColor.BROWN);
+
+        tvwalkDate.setTypeface(tf);
+        tvwalkDate.setTextSize(24.0f);
+        tvwalkDate.setTextColor(WifWafColor.BROWN);
+
+        tvwalkTime.setTypeface(tf);
+        tvwalkTime.setTextSize(24.0f);
+        tvwalkTime.setTextColor(WifWafColor.BROWN);
     }
 
     public void viewPathWalk(View view) {

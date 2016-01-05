@@ -38,10 +38,6 @@ public class DogPublicViewHolder {
         this.avatar = avatar;
     }
 
-    public int getDefaultAvatar() {
-        return R.drawable.dogi2;
-    }
-
     public TextView getGender() {
         return gender;
     }

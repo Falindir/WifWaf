@@ -3,6 +3,7 @@ package shagold.wifwaf;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -72,6 +73,9 @@ public class DogProfileActivity extends AppCompatActivity {
 
         // Remplissage des champs pour modif
         initFields();
+
+        //Mise en page formulaire
+        style();
 
         // Gestion gender
         Spinner Ssex = (Spinner) findViewById(R.id.dogProfileGender);
@@ -168,6 +172,70 @@ public class DogProfileActivity extends AppCompatActivity {
 
         EditText dogGAWK = (EditText) findViewById(R.id.dogProfilegetAlongWithKids);
         dogGAWK.setText(dog.getGetAlongWithKids());
+    }
+
+    public void style(){
+        //Récupération typeface
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/coolvetica rg.ttf");
+
+        //Récupération texview
+        TextView tvName = (TextView) findViewById(R.id.dogProfileName_tv);
+        TextView tvAge = (TextView) findViewById(R.id.dogProfileAge_tv);
+        TextView tvBeh = (TextView) findViewById(R.id.dogProfileBehaviour_tv);
+        TextView tvBreed = (TextView) findViewById(R.id.dogProfileBreed_tv);
+        TextView tvDesc = (TextView) findViewById(R.id.dogProfileDescription_tv);
+        TextView tvGAWF = (TextView) findViewById(R.id.dogProfileGAWF_tv);
+        TextView tvGAWM = (TextView) findViewById(R.id.dogProfileGAWM_tv);
+        TextView tvGAWK = (TextView) findViewById(R.id.dogProfileGAWK_tv);
+        TextView tvGAWH = (TextView) findViewById(R.id.dogProfileGAWH_tv);
+        TextView tvSize = (TextView) findViewById(R.id.dogProfileSize_tv);
+        TextView tvGender = (TextView) findViewById(R.id.dogProfileGender_tv);
+
+        //On ajoute le style à tous les textview
+        tvName.setTypeface(tf);
+        tvName.setTextSize(24.0f);
+        tvName.setTextColor(WifWafColor.BROWN);
+
+        tvAge.setTypeface(tf);
+        tvAge.setTextSize(24.0f);
+        tvAge.setTextColor(WifWafColor.BROWN);
+
+        tvBeh.setTypeface(tf);
+        tvBeh.setTextSize(24.0f);
+        tvBeh.setTextColor(WifWafColor.BROWN);
+
+        tvBreed.setTypeface(tf);
+        tvBreed.setTextSize(20.0f);
+        tvBreed.setTextColor(WifWafColor.BROWN);
+
+        tvDesc.setTypeface(tf);
+        tvDesc.setTextSize(20.0f);
+        tvDesc.setTextColor(WifWafColor.BROWN);
+
+        tvGAWF.setTypeface(tf);
+        tvGAWF.setTextSize(20.0f);
+        tvGAWF.setTextColor(WifWafColor.BROWN);
+
+        tvGAWM.setTypeface(tf);
+        tvGAWM.setTextSize(20.0f);
+        tvGAWM.setTextColor(WifWafColor.BROWN);
+
+        tvGAWK.setTypeface(tf);
+        tvGAWK.setTextSize(20.0f);
+        tvGAWK.setTextColor(WifWafColor.BROWN);
+
+        tvGAWH.setTypeface(tf);
+        tvGAWH.setTextSize(20.0f);
+        tvGAWH.setTextColor(WifWafColor.BROWN);
+
+        tvSize.setTypeface(tf);
+        tvSize.setTextSize(20.0f);
+        tvSize.setTextColor(WifWafColor.BROWN);
+
+        tvGender.setTypeface(tf);
+        tvGender.setTextSize(20.0f);
+        tvGender.setTextColor(WifWafColor.BROWN);
+
     }
 
     public void saveChangeDog(View view) throws JSONException {
@@ -370,7 +438,7 @@ public class DogProfileActivity extends AppCompatActivity {
                                 }
                             }
                             actlayout = (LinearLayout) findViewById(R.id.layoutDogProfile);
-                            actlayout.addView(cb, 16);
+                            actlayout.addView(cb, 18);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -95,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/userDogs"
+            android:drawableLeft="@drawable/ic_pets_black_24dp"
             android:layout_marginTop="10dp"
             android:onClick="userDogs"/>
 

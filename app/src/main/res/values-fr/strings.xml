@@ -51,12 +51,12 @@
     <string name="modify_date">Modifier la date</string>
     <string name="modify_time">Modifier l\'heure</string>
     <string name="no_dogs_selected">Vous n\'avez selectionné aucun chien...</string>
-    <string name="promptGender"></string>
+    <string name="promptGender">Sexe</string>
     <string name="selectDog">Sélectionner les chiens</string>
     <string name="select_date">Sélectionner la date</string>
     <string name="selected_dogs">Chiens sélectionnés:</string>
     <string name="time">Heure</string>
-    <string name="title"></string>
+    <string name="title">Titre</string>
     <string name="useWalk">Utiliser ce tracé</string>
     <string name="userDogs">Voir les chiens de l\'utilisateur</string>
     <string name="user_dogs_prompt">Sélectionnez vos chiens</string>
@@ -87,7 +87,7 @@
     <string name="dogsWalk">Chiens participant à cette balade</string>
     <string name="dogName">Nom du chien</string>
     <string name="end">Fin</string>
-    <string name="change_picture_gallery"></string>
+    <string name="change_picture_gallery">Sélectionner une photo depuis la gallerie</string>
     <string name="delete_walk">Supprimer la balade</string>
     <string name="no">Non</string>
     <string name="beginning">Début</string>
@@ -95,4 +95,11 @@
     <string name="sure_delete_walk">Etes vous sûr de vouloir supprimer cette balade?</string>
     <string name="select_birthday">Sélectionner la date de naissance</string>
     <string name="yes">Oui</string>
+    <string name="change_picture_take">Prendre une nouvelle photo</string>
+    <string name="date_WA">Date:</string>
+    <string name="delete_dog">Suppression d\'un chien</string>
+    <string name="ok">Ok</string>
+    <string name="refuse">Refuser</string>
+    <string name="sure_delete_dog">Etes vous sûr de vouloir supprimer ce chien :</string>
+    <string name="what_time">A quelle heure?</string>
 </resources>

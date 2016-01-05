@@ -39,10 +39,6 @@ public class DogViewHolder {
         this.avatar = avatar;
     }
 
-    public int getDefaultAvatar() {
-        return R.drawable.dogi2;
-    }
-
     public ImageButton getButton() {
         return button;
     }

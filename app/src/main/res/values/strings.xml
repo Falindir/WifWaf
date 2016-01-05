@@ -71,6 +71,7 @@
     <string name="departure">Departure</string>
     <string name="timeStamp">At what time?</string>
     <string name="date">Which day?</string>
+    <string name="date_WA">Date:</string>
     <string name="TraceByWalking">Trace by walking</string>
     <string name="TraceByDrawing">Trace by drawing</string>
     <string name="promptGender">Gender</string>
@@ -84,6 +85,7 @@
     <string name="no_dogs_selected">No dogs selected</string>
     <string name="selected_dogs">Dogs selected :</string>
     <string name="select_date">Select date</string>
+    <string name="select_birthdate">Select birthdate</string>
     <string name="modify_date">Modify date</string>
     <string name="like_to_come">I\'d like to come!</string>
     <string name="modify_time">Modify time</string>
@@ -119,4 +121,8 @@
     <string name="error_no_dogs_selected">Please select at least one dog for your walk!</string>
     <string name="refuse">Refuse</string>
     <string name="beginning">Beginning</string>
+    <string name="delete_dog">Delete dog</string>
+    <string name="sure_delete_dog">Are you sure you want to delete the dog :</string>
+    <string name="ok">Ok</string>
+    <string name="what_time">At what time?</string>
 </resources>

@@ -20,6 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/name"
+            android:id="@+id/dogProfileName_tv"
             android:textStyle="bold"
             style="@style/Title.TextView"/>
 
@@ -41,13 +42,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/change_picture_take"
+            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
             android:id="@+id/selectImage"
             android:onClick="takePic"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/change_picture_gallery"
+            android:text="@string/select_picture_from_explorer"
+            android:drawableLeft="@drawable/ic_folder_black_24dp"
             android:id="@+id/selectPic_AD"
             android:onClick="selectPic"/>
 
@@ -55,6 +58,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/age"
+            android:id="@+id/dogProfileAge_tv"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
@@ -79,6 +83,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/description"
+            android:id="@+id/dogProfileDescription_tv"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
@@ -95,6 +100,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/gender"
+            android:id="@+id/dogProfileGender_tv"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
@@ -109,6 +115,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/breed"
+            android:id="@+id/dogProfileBreed_tv"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
@@ -124,6 +131,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:id="@+id/dogProfileSize_tv"
             android:layout_marginTop="10dp"
             android:text="@string/size"
             style="@style/Title.TextView"/>
@@ -148,6 +156,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Title.TextView"
+            android:id="@+id/dogProfileBehaviour_tv"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
             android:text="@string/behaviour" />
@@ -157,6 +166,7 @@
             android:layout_height="wrap_content"
             android:text="@string/getAlongWithMales"
             android:textStyle="bold"
+            android:id="@+id/dogProfileGAWM_tv"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
 
@@ -173,6 +183,7 @@
             android:layout_height="wrap_content"
             android:text="@string/getAlongWithFemales"
             android:textStyle="bold"
+            android:id="@+id/dogProfileGAWF_tv"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
 
@@ -189,6 +200,7 @@
             android:layout_height="wrap_content"
             android:text="@string/getAlongWithKids"
             android:textStyle="bold"
+            android:id="@+id/dogProfileGAWK_tv"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
 
@@ -205,6 +217,7 @@
             android:layout_height="wrap_content"
             android:text="@string/getAlongWithHumans"
             android:textStyle="bold"
+            android:id="@+id/dogProfileGAWH_tv"
             android:layout_marginTop="10dp"
             style="@style/Title.TextView"/>
 
@@ -220,6 +233,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save"
+            android:drawableLeft="@drawable/ic_save_black_24dp"
             android:id="@+id/applyChangeDogProfile"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"

@@ -1,6 +1,7 @@
 package shagold.wifwaf.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,25 +42,30 @@ public class WalkAdapter extends ArrayAdapter<Walk> {
             viewHolder = new WalkViewHolder();
             viewHolder.setTitle((TextView) convertView.findViewById(R.id.titleRowWalk));
             viewHolder.setDescription((TextView) convertView.findViewById(R.id.descriptionRowWalk));
-            viewHolder.setAvatar((ImageView) convertView.findViewById(R.id.avatarRowWalk));
             viewHolder.setCity((TextView) convertView.findViewById(R.id.cityRowWalk));
             viewHolder.setDate((TextView) convertView.findViewById(R.id.dateRowWalk));
             viewHolder.setTime((TextView) convertView.findViewById(R.id.timeRowWalk));
             convertView.setTag(viewHolder);
         }
 
-        // TODO fix warning with resource android <-- ?? pour les chaines qui sont en dur plus
-        // TODO bas. Comme description ou city. Pour que ce soit correcte faut regarder
-        // TODO comment ça marche avec des placeholders le ressources
         final Walk walk = getItem(position);
         viewHolder.getTitle().setText(walk.getTitle());
-        viewHolder.getDescription().setText("Description : " + walk.getDescription());
-        //TODO default value <-- ? c'est pour la photo je met de base une image par default
-        viewHolder.getAvatar().setImageResource(R.drawable.user);
-        viewHolder.getCity().setText("City " + " : " + walk.getCity());
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Kindergarten.ttf");
+        viewHolder.getTitle().setTypeface(tf);
+        viewHolder.getTitle().setTextSize(35.0f);
+        viewHolder.getTitle().setTextColor(WifWafColor.BROWN);
+
+        String desc = getContext().getString(R.string.description);
+        viewHolder.getDescription().setText(desc + " : " + walk.getDescription());
+
+        String city = getContext().getString(R.string.city);
+        viewHolder.getCity().setText(city + " : " + walk.getCity());
+
         WifWafWalkDeparture departure = new WifWafWalkDeparture(walk.getDeparture());
-        viewHolder.getDate().setText("Date : " + departure.getFormattedDate());
-        viewHolder.getTime().setText("Time : " + departure.getFormattedTime());
+        String date = getContext().getString(R.string.date_WA);
+        viewHolder.getDate().setText(date + " : " + departure.getFormattedDate());
+        String time = getContext().getString(R.string.time);
+        viewHolder.getTime().setText(time + " : " + departure.getFormattedTime());
 
         if(privateRow) {
             if(departure.isTooLate()) {

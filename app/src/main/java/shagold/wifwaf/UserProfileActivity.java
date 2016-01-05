@@ -3,6 +3,7 @@ package shagold.wifwaf;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,6 +29,7 @@ import shagold.wifwaf.dataBase.User;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
 import shagold.wifwaf.fragment.WifWafDatePickerFragment;
+import shagold.wifwaf.tool.WifWafColor;
 import shagold.wifwaf.tool.WifWafUserBirthday;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -48,11 +50,12 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        //Gestion socket
         mUser = SocketManager.getMyUser();
-
         mSocket = SocketManager.getMySocket();
         mSocket.on("RUpdateUser", onRUpdateUser);
 
+        //Récupération values
         mImageView = (ImageView) findViewById(R.id.avatarUserProfile);
 
         EditText userProfileName = (EditText) findViewById(R.id.userProfileName);
@@ -75,6 +78,36 @@ public class UserProfileActivity extends AppCompatActivity {
         Bitmap myphoto = mUser.getPhotoBitmap();
         creatorWalk.setImageBitmap(myphoto);
 
+        //Récupération typeface
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/coolvetica rg.ttf");
+
+        //Récupération texview
+        TextView tvName = (TextView) findViewById(R.id.userProfileName_tv);
+        TextView tvMail = (TextView) findViewById(R.id.userProfileMail_tv);
+        TextView tvBirth = (TextView) findViewById(R.id.userProfileBirthday_tv);
+        TextView tvPhone = (TextView) findViewById(R.id.userProfilePhoneNumber_tv);
+        TextView tvDesc = (TextView) findViewById(R.id.userProfileDescription_tv);
+
+        //On ajoute le style à tous les textview
+        tvName.setTypeface(tf);
+        tvName.setTextSize(24.0f);
+        tvName.setTextColor(WifWafColor.BROWN);
+
+        tvMail.setTypeface(tf);
+        tvMail.setTextSize(24.0f);
+        tvMail.setTextColor(WifWafColor.BROWN);
+
+        tvBirth.setTypeface(tf);
+        tvBirth.setTextSize(24.0f);
+        tvBirth.setTextColor(WifWafColor.BROWN);
+
+        tvPhone.setTypeface(tf);
+        tvPhone.setTextSize(20.0f);
+        tvPhone.setTextColor(WifWafColor.BROWN);
+
+        tvDesc.setTypeface(tf);
+        tvDesc.setTextSize(20.0f);
+        tvDesc.setTextColor(WifWafColor.BROWN);
     }
 
     @Override

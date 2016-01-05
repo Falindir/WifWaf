@@ -105,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save"
+            android:drawableLeft="@drawable/ic_save_black_24dp"
             android:id="@+id/usePublicWalkButton"
             android:onClick="saveUseWalk"
             android:layout_gravity="center_horizontal" />

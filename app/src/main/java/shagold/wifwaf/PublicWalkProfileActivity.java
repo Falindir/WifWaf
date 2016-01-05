@@ -3,6 +3,7 @@ package shagold.wifwaf;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +33,7 @@ import shagold.wifwaf.dataBase.Walk;
 import shagold.wifwaf.adapter.DogPublicAdapter;
 import shagold.wifwaf.manager.MenuManager;
 import shagold.wifwaf.manager.SocketManager;
+import shagold.wifwaf.tool.WifWafColor;
 import shagold.wifwaf.tool.WifWafWalkDeparture;
 
 public class PublicWalkProfileActivity extends AppCompatActivity {
@@ -58,7 +60,6 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
         mSocket.on("RGetAllMyDogs", onRGetAllMyDogs);
         mSocket.emit("getAllMyDogs", mUser.getIdUser());
 
-
         walk = (Walk) getIntent().getSerializableExtra("WALK");
 
         // Récupération liste de chiens
@@ -73,6 +74,11 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
         mSocket.emit("getAllParticipationsForIdWalk", walk.getIdWalk());
         mSocket.on("RgetAllParticipationsForIdWalk", onRGetParticipants);
 
+        initFields();
+        style();
+    }
+
+    public void initFields(){
         TextView titleWalk = (TextView) findViewById(R.id.walkPublicTitle);
         titleWalk.setText(walk.getTitle());
 
@@ -89,6 +95,40 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
 
         TextView timeDepartureWalk = (TextView) findViewById(R.id.walkPublicTimeDeparture);
         timeDepartureWalk.setText(departure.getFormattedTime());
+    }
+
+    public void style(){
+        //Récupération typeface
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/coolvetica rg.ttf");
+
+        //Récupération texview
+        TextView tvName = (TextView) findViewById(R.id.publicwalkProfileTitleTV);
+        TextView tvDesc = (TextView) findViewById(R.id.publicwalkProfileDescTV);
+        TextView tvCity = (TextView) findViewById(R.id.publicwalkProfileCityTV);
+        TextView tvDay = (TextView) findViewById(R.id.publicwalkProfileDayTV);
+        TextView tvTime = (TextView) findViewById(R.id.publicwalkProfileTimeTV);
+
+        //On ajoute le style à tous les textview
+        tvName.setTypeface(tf);
+        tvName.setTextSize(24.0f);
+        tvName.setTextColor(WifWafColor.BROWN);
+
+        tvDesc.setTypeface(tf);
+        tvDesc.setTextSize(24.0f);
+        tvDesc.setTextColor(WifWafColor.BROWN);
+
+        tvCity.setTypeface(tf);
+        tvCity.setTextSize(24.0f);
+        tvCity.setTextColor(WifWafColor.BROWN);
+
+        tvTime.setTypeface(tf);
+        tvTime.setTextSize(24.0f);
+        tvTime.setTextColor(WifWafColor.BROWN);
+
+        tvDay.setTypeface(tf);
+        tvDay.setTextSize(24.0f);
+        tvDay.setTextColor(WifWafColor.BROWN);
+
     }
 
     @Override
@@ -109,6 +149,21 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
     }
 
     public void sendNotif(View view) throws JSONException {
+        //On vérifie que l'usr a des chiens
+        if (dogsUser.isEmpty()) {
+            //cet usr n'a aucun chien
+            new AlertDialog.Builder(PublicWalkProfileActivity.this)
+                    .setTitle(getString(R.string.oups))
+                    .setMessage(getString(R.string.no_dogs_for_now))
+                    .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(PublicWalkProfileActivity.this, AddDogActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
+        }
+
         // Récup id communes pour tous les chiens
         final int idWalk = walk.getIdWalk();
         final int idUser = mUser.getIdUser();
@@ -279,7 +334,6 @@ public class PublicWalkProfileActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     dogsUser = Dog.generateDogsFromJson((JSONArray) args[0]);
-
                 }
 
             });

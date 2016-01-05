@@ -259,71 +259,6 @@ public class SignUpActivity extends AppCompatActivity {
         mSocket.emit("TrySignUp", jsonUser);
     }
 
-    private Emitter.Listener onTestString = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            SignUpActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String a = (String) args[0];
-                    System.out.println("je recois onTest" + a);
-                    mSocket.emit("onTestSendString", "unMot");
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onTestJson = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args)  {
-            SignUpActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONObject a =  (JSONObject) args[0];
-                    System.out.println("je recois l'objet" + a.toString());
-                    //préparer l'objet et faire l'envoi ici
-                    JSONObject JsonTest = new JSONObject();
-                    try {
-                        JsonTest.put("email", "adr@mail.fr");
-                        JsonTest.put("name", "thisismyname");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("JsonObject préparé: " + JsonTest.toString());
-                    mSocket.emit("onTestSendJson", JsonTest);
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onTestJsonArray = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            SignUpActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    JSONArray a = (JSONArray) args[0];
-                    System.out.println("je recois l'objet" + a.toString());
-                    //préparer l'objet pour l'envoi*
-                    JSONArray JsonArrayTest = null;
-                    try {
-                        JsonArrayTest = new JSONArray()
-                                .put(new JSONObject()
-                                        .put("prenom", "jimmy")
-                                        .put("nom", "lopez"))
-                                .put(new JSONObject()
-                                        .put("prenom", "marlene")
-                                        .put("nom", "gui"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.print("JsonArray préparé: " + JsonArrayTest.toString());
-                    mSocket.emit("onTestSendJsonArray", JsonArrayTest);
-                }
-            });
-        }
-    };
-
     private Emitter.Listener onRTrySignUp = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -332,11 +267,13 @@ public class SignUpActivity extends AppCompatActivity {
                 public void run() {
                     JSONObject param = (JSONObject) args[0];
                     try {
-                        if((int)param.get("idUser") < 0) { //TODO faire un traitement spécifique pour chaque erreur?
+                        if((int)param.get("idUser") < 0) {
                            AlertDialog alertDialog = new AlertDialog.Builder(SignUpActivity.this).create();
-                            alertDialog.setTitle("Erreur");
-                            alertDialog.setMessage("Cette adresse mail est déjà utilisée"); //TODO internationalisation
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            String error = getString(R.string.oups);
+                            alertDialog.setTitle(error);
+                            String email = getString(R.string.error_email_already_exists);
+                            alertDialog.setMessage(email);
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();

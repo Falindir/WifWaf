@@ -142,12 +142,14 @@
             android:layout_height="wrap_content"
             android:text="@string/take_picture"
             android:id="@+id/selectImage"
+            android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
             android:onClick="takePic"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/select_picture_from_explorer"
+            android:drawableLeft="@drawable/ic_folder_black_24dp"
             android:id="@+id/selectPic_AD"
             android:onClick="selectPic"/>
 
@@ -155,6 +157,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/confirm"
+            android:drawableLeft="@drawable/ic_save_black_24dp"
             android:id="@+id/confirmAddDogButton"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"

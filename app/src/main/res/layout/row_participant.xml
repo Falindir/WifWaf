@@ -34,6 +34,4 @@
         android:textSize="22dp"
         tools:text="@string/name" />
 
-
-
 </RelativeLayout>

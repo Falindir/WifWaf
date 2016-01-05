@@ -76,7 +76,6 @@ public class UserDogsActivity extends AppCompatActivity {
             UserDogsActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("Event reçu");
                     List<Dog> dogs = Dog.generateDogsFromJson((JSONArray) args[0]);
                     DogAdapter adapter = new DogAdapter(UserDogsActivity.this, dogs);
                     mListView.setAdapter(adapter);

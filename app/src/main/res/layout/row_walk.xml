@@ -3,15 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    >
-
-    <ImageView
-        android:id="@+id/avatarRowWalk"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        tools:background="#AAA"
-        />
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/titleRowWalk"
@@ -19,12 +11,9 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/avatarRowWalk"
-        android:layout_alignTop="@+id/avatarRowWalk"
         android:textStyle="bold"
         android:textSize="18sp"
-        tools:text="@string/name"
-        />
+        tools:text="@string/name"/>
 
     <TextView
         android:id="@+id/cityRowWalk"
@@ -33,8 +22,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/titleRowWalk"
         android:layout_below="@+id/titleRowWalk"
-        tools:text="@string/city"
-        />
+        tools:text="@string/city" />
 
     <TextView
         android:id="@+id/descriptionRowWalk"
@@ -43,8 +31,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/cityRowWalk"
         android:layout_below="@+id/cityRowWalk"
-        tools:text="@string/description"
-        />
+        tools:text="@string/description" />
 
     <TextView
         android:id="@+id/dateRowWalk"
@@ -53,8 +40,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/descriptionRowWalk"
         android:layout_below="@+id/descriptionRowWalk"
-        tools:text="@string/date"
-        />
+        tools:text="@string/date" />
 
     <TextView
         android:id="@+id/timeRowWalk"
@@ -63,6 +49,6 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/dateRowWalk"
         android:layout_below="@+id/dateRowWalk"
-        tools:text="@string/time"
-        />
+        tools:text="@string/time" />
+
 </RelativeLayout>

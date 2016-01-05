@@ -1,14 +1,16 @@
 package shagold.wifwaf.adapter;
 
+import android.graphics.Typeface;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import shagold.wifwaf.R;
 
 public class WalkViewHolder {
 
     private TextView title;
     private TextView description;
-    private ImageView avatar;
     private ImageButton button;
     private TextView city;
     private TextView date;
@@ -30,14 +32,6 @@ public class WalkViewHolder {
 
     public void setTitle(TextView title) {
         this.title = title;
-    }
-
-    public ImageView getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(ImageView avatar) {
-        this.avatar = avatar;
     }
 
     public ImageButton getButton() {

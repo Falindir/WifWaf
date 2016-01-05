@@ -8,8 +8,7 @@
         android:id="@+id/avatarPublicRowDog"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        tools:background="#AAA"
-        />
+        tools:background="#AAA"/>
 
     <TextView
         android:id="@+id/namePublicRowDog"
@@ -20,8 +19,7 @@
         android:layout_toRightOf="@+id/avatarPublicRowDog"
         android:layout_alignTop="@+id/avatarPublicRowDog"
         android:textStyle="bold"
-        tools:text="@string/name"
-        />
+        tools:text="@string/name"/>
 
     <TextView
         android:id="@+id/descriptionPublicRowDog"
@@ -30,8 +28,7 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/namePublicRowDog"
         android:layout_below="@+id/namePublicRowDog"
-        tools:text="@string/description"
-        />
+        tools:text="@string/description"/>
 
     <TextView
         android:id="@+id/genderPublicRowDog"
@@ -40,7 +37,6 @@
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/descriptionPublicRowDog"
         android:layout_below="@+id/descriptionPublicRowDog"
-        tools:text="@string/gender"
-        />
+        tools:text="@string/gender"/>
 
 </RelativeLayout>

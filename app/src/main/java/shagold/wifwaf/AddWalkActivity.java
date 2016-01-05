@@ -102,7 +102,7 @@ public class AddWalkActivity extends AppCompatActivity {
                         new AlertDialog.Builder(AddWalkActivity.this)
                                 .setTitle(getString(R.string.oups))
                                 .setMessage(getString(R.string.no_dogs_for_now))
-                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Intent intent = new Intent(AddWalkActivity.this, AddDogActivity.class);
                                         startActivity(intent);
